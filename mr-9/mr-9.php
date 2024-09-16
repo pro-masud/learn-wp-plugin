@@ -19,4 +19,20 @@
      function mr9_text_domain_loaded_files(){
         load_plugin_textdomain("mr-9", false, dirname(__FILE__). "./language");
      }
+
+    /**
+     * create a new function post count and filter post title
+     * */ 
+
+     add_action("the_title", "mr9_post_title");
+
+     function mr9_post_title($title){
+
+        // $title .= " promasud";  //concatanation blog post title
+        $title_word_count = str_word_count($title);
+
+        $title .=  sprintf("<h4>%s</h4>", $title_word_count);
+
+        return $title;
+     }
 ?>
