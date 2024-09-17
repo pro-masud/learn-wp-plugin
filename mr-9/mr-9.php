@@ -24,12 +24,19 @@
      * create a new function post count and filter post title
      * */ 
 
-     add_action("the_title", "mr9_post_title");
+     function mr9_post_title($title): mixed{
 
-     function mr9_post_title($title){
+      // $title .= " promasud";  //concatanation blog post title
+      $title_word_count = str_word_count($title);
+      
+      //   create a conditional filter post
+      $mr9_post_type = get_post_type(get_the_ID()); 
 
-        // $title .= " promasud";  //concatanation blog post title
-        $title_word_count = str_word_count($title);
+      $get_post_type = apply_filters("apply_filter_within_post", array());
+
+      if(!in_array($mr9_post_type, $get_post_type )){
+         return $title;
+      }
 
       //   apply_filter hook dynamic tags here
       $args = apply_filters("new_tags_name", "h4");
@@ -38,4 +45,6 @@
 
         return $title;
      }
+
+     add_action("the_title", "mr9_post_title");
 ?>
