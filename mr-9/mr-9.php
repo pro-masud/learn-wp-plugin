@@ -31,7 +31,10 @@
         // $title .= " promasud";  //concatanation blog post title
         $title_word_count = str_word_count($title);
 
-        $title .=  sprintf("<h4>%s</h4>", $title_word_count);
+      //   apply_filter hook dynamic tags here
+      $args = apply_filters("new_tags_name", "h4");
+
+        $title .=  sprintf("<%s>%s</%s>", $args, $title_word_count, $args);
 
         return $title;
      }
