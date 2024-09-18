@@ -22,12 +22,25 @@
     class PortfolioLoadMore{
         // create a plugin construct function
         public function __construct(){
-            add_action("plugin_loaded", array($this, 'Portfolio_Text_Domain_loaded' ));
+            add_action("plugins_loaded", array($this, 'Portfolio_Text_Domain_loaded' ));
+            add_action('wp_enqueue_scripts', array($this, 'Portfolio_Assets_Files'));
         }
 
-        /** Plugin Text Domain Loaded fuction */ 
+        /** Plugin Text Domain Loaded fuction */
         public function Portfolio_Text_Domain_loaded(){
             load_plugin_textdomain('portfolio', false, trailingslashit( PORTFOLIO_HELPER_DIR . 'language' ) );
+        }
+
+        // Plugin Included All CSS and JS file included here
+        public function Portfolio_Assets_Files(){
+            // plugin css file include 
+            wp_enqueue_style('portfolio-bootstrap', PORTFOLIO_HELPER_DIR . 'assets/css/bootstrap.min.css', null,  PORT_LOAD_MORE_VERSION );
+            wp_enqueue_style('portfolio-css', PORTFOLIO_HELPER_DIR . 'assets/css/portfolio.css', null, PORT_LOAD_MORE_VERSION );
+
+            // Plugin JS file Include
+            wp_enqueue_script('portfolio-bootstrap', PORTFOLIO_HELPER_DIR . "assets/js/bootstrap.min.js", ['jquery'], PORT_LOAD_MORE_VERSION, true );
+            wp_enqueue_script('portfolio-isotope', PORTFOLIO_HELPER_DIR . "assets/js/isotope.pkgd.min.js", ['jquery'], PORT_LOAD_MORE_VERSION, true );
+            wp_enqueue_script('portfolio-js', PORTFOLIO_HELPER_DIR . "assets/js/portfolio.js", [ 'jquery', 'portfolio-isotope' ], PORT_LOAD_MORE_VERSION, true );
         }
     }
 
