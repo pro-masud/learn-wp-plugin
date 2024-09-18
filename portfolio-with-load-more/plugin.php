@@ -1,3 +1,4 @@
+<?php 
 /**
      * Plugin Name: Portfolio with Load More
      * version: 1.0.0
@@ -7,3 +8,6 @@
      * Text Domain: mr-9 
      * Domain Path:/language
      * */ 
+
+    /** Portfolio version */ 
+    define('PORT_LOAD_MORE_POTFOLIO_VERSION', '1.0.0');
