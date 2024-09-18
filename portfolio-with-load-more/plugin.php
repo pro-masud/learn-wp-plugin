@@ -14,3 +14,6 @@
 
     /** Portfolio Directory Path Version */
     define('PORTFOLIO_HELPER_DIR', trailingslashit(plugin_dir_path( __FILE__ )));
+
+    /** Portfolio includes directory path */ 
+    define("PORTFOLIO_HELPER_INCLUDES_DIR", trailingslashit( plugin_dir_path( __FILE__ ) ));
