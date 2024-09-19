@@ -24,6 +24,14 @@
         public function __construct(){
             add_action("plugins_loaded", array($this, 'Portfolio_Text_Domain_loaded' ));
             add_action('wp_enqueue_scripts', array($this, 'Portfolio_Assets_Files'));
+
+            // Custom Post Type Included
+            $this->Custom_Post_Type_Ragister();
+        }
+
+        // Register Custom Post Types
+        private function Custom_Post_Type_Ragister(){
+            include PORTFOLIO_HELPER_INCLUDES_DIR . "/Custom-Post-Types.php";
         }
 
         /** Plugin Text Domain Loaded fuction */
