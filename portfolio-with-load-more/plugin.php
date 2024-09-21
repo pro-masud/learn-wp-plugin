@@ -57,7 +57,7 @@
                                                     </li>
                                                 <?php 
                                                 endforeach;
-                                            }     
+                                            }
                                         ?>
                                     </ul>
                                 </div>
@@ -82,11 +82,10 @@
                                                         $slug =  $term -> slug;
                                                     }
                                                 }
-                                                ?>
+                                            ?>
                                                 <div class="portfolio-item <?php  foreach($terms as $term){ 
                                                     echo esc_html($term -> slug);
-                                                } ?>
-                                                    ">
+                                                    } ?> ">
                                                     <a href="<?php the_permalink(); ?>" class="portfolio-image popup-gallery" title="Bread">
                                                         <?php the_post_thumbnail(); ?>
                                                         <div class="portfolio-hover-title">
@@ -103,8 +102,17 @@
                                                 </div>
                                             <?php
                                                 endwhile;
-                                            }
-                                        ?>
+                                                wp_reset_postdata();
+                                                echo "<div class='dataload'></div>";
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="load-more-btn">
+                                    <a href="#" class="btn default-btn loadAjax">Load More</a>
                                 </div>
                             </div>
                         </div>
