@@ -87,7 +87,7 @@
                                                     echo esc_html($term -> slug);
                                                 } ?>
                                                     ">
-                                                    <a href="#" class="portfolio-image popup-gallery" title="Bread">
+                                                    <a href="<?php the_permalink(); ?>" class="portfolio-image popup-gallery" title="Bread">
                                                         <?php the_post_thumbnail(); ?>
                                                         <div class="portfolio-hover-title">
                                                             <div class="portfolio-content">
