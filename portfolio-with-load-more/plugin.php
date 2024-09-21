@@ -62,19 +62,49 @@
                                     </ul>
                                 </div>
                                 <div class="portfolio--items portfolio-grid portfolio-gallery grid-4 gutter">
-                                    <div class="portfolio-item cat2">
-                                        <a href="#" class="portfolio-image popup-gallery" title="Bread">
-                                            <img src="https://miro.medium.com/v2/resize:fit:800/0*JUUIaKYvIBQq9p9y.jpg" alt="">
-                                            <div class="portfolio-hover-title">
-                                                <div class="portfolio-content">
-                                                    <h4>This is a Title</h4>
-                                                    <div class="portfolio-category">
-                                                        <span>Category 01</span>
-                                                    </div>
+                                    <?php 
+                                        $args = [
+                                            'post_type' => 'portfolio',
+                                            'posts_per_page' => 4,
+                                        ];
+
+                                        $portfoli_query = new WP_Query( $args );
+
+                                        if($portfoli_query -> have_posts()){
+
+                                            while($portfoli_query -> have_posts()):
+                                                $portfoli_query->the_post(); 
+                                                $terms = get_the_terms(get_the_ID(), 'category');
+
+                                                $single_terms = '';
+                                                if($terms){
+                                                    foreach($terms as $term){
+                                                        $slug =  $term -> slug;
+                                                    }
+                                                }
+                                                ?>
+                                                <div class="portfolio-item <?php  foreach($terms as $term){ 
+                                                    echo esc_html($term -> slug);
+                                                } ?>
+                                                    ">
+                                                    <a href="#" class="portfolio-image popup-gallery" title="Bread">
+                                                        <?php the_post_thumbnail(); ?>
+                                                        <div class="portfolio-hover-title">
+                                                            <div class="portfolio-content">
+                                                                <h4><?php echo the_title(); ?></h4>
+                                                                <div class="portfolio-category">
+                                                                    <?php  foreach($terms as $term){ ?>
+                                                                        <span><?php echo esc_html($term -> name); ?></span>
+                                                                    <?php  } ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                            <?php
+                                                endwhile;
+                                            }
+                                        ?>
                                 </div>
                             </div>
                         </div>
