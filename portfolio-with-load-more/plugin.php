@@ -1,5 +1,5 @@
 <?php 
-/**
+    /**
      * Plugin Name: Portfolio with Load More
      * version: 1.0.0
      * Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, similique!
@@ -43,9 +43,22 @@
                                 <div class="text-center">
                                     <ul class="portfolio-filter text-center">
                                         <li class="active"><a href="#" data-filter="*"> All</a></li>
-                                        <li><a href="#" data-filter=".cat1">Cat 1</a></li>
-                                        <li><a href="#" data-filter=".cat2">Cat 2</a></li>
-                                        <li><a href="#" data-filter=".cat3">Cat 3</a></li>
+                                        <?php 
+                                            $categorys = get_terms("category", array(
+                                                    'hide_empty' => true,
+                                                )
+                                            );
+
+                                            if(!empty($categorys) ){
+                                                foreach( $categorys as $category): 
+                                                ?>
+                                                    <li>
+                                                        <a href="#" data-filter=".<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
+                                                    </li>
+                                                <?php 
+                                                endforeach;
+                                            }     
+                                        ?>
                                     </ul>
                                 </div>
                                 <div class="portfolio--items portfolio-grid portfolio-gallery grid-4 gutter">
