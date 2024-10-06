@@ -70,6 +70,10 @@
 
                                         $portfoli_query = new WP_Query( $args );
 
+                                        echo "<pre>";
+                                        print_r($portfoli_query);
+                                        echo "<pre>";
+
                                         if($portfoli_query -> have_posts()){
 
                                             while($portfoli_query -> have_posts()):
