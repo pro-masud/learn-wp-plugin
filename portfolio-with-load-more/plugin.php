@@ -42,9 +42,12 @@
                             <div class="col-md-12">
                                 <div class="text-center">
                                     <ul class="portfolio-filter text-center">
-                                        <li class="active"><a href="#" data-filter="*"> All</a></li>
+                                        <li class="active">
+                                            <a href="#" data-filter="*"><?php esc_html_e('All', 'portfolio' ) ?></a>
+                                        </li>
                                         <?php 
-                                            $categorys = get_terms("category", array(
+                                            $categorys = get_terms(
+                                            "category", array(
                                                     'hide_empty' => true,
                                                 )
                                             );
@@ -69,10 +72,6 @@
                                         ];
 
                                         $portfoli_query = new WP_Query( $args );
-
-                                        echo "<pre>";
-                                        print_r($portfoli_query);
-                                        echo "<pre>";
 
                                         if($portfoli_query -> have_posts()){
 
