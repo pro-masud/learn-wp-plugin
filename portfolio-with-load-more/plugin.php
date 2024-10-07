@@ -53,13 +53,11 @@
                                             );
 
                                             if(!empty($categorys) ){
-                                                foreach( $categorys as $category): 
-                                                ?>
+                                                foreach( $categorys as $category): ?>
                                                     <li>
                                                         <a href="#" data-filter=".<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
                                                     </li>
-                                                <?php 
-                                                endforeach;
+                                                <?php endforeach;
                                             }
                                         ?>
                                     </ul>
