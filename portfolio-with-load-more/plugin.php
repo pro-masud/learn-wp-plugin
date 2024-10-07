@@ -102,9 +102,9 @@
                                                     </a>
                                                 </div>
                                             <?php
-                                                endwhile;
-                                                wp_reset_postdata();
-                                                echo "<div class='dataload'></div>";
+                                            endwhile;
+                                            wp_reset_postdata();
+                                            echo "<div class='dataload'></div>";
                                         }
                                     ?>
                                 </div>
