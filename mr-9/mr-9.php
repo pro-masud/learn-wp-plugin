@@ -30,6 +30,12 @@ final class MR_9 {
      */ 
     function __construct() {
         $this->define_constants();
+
+
+        /**
+         * Plugin Activation Hook
+        */
+        register_activation_hook(__FILE__, [$this, 'plugin_activate'] );
     }
 
     /**
@@ -56,6 +62,20 @@ final class MR_9 {
         define('MR_9_PATH', __DIR__);
         define('MR_9_URL', plugins_url('', MR_9_FILE ));
         define('MR_9_ASSETS', MR_9_URL . '');
+    }
+
+    /**
+     * Define Plugin Activation Function
+     * */ 
+    public function plugin_activate(){
+
+        $installed = get_option( 'mr_9_installed' );
+
+        if( ! $installed ){
+            update_option('mr_9_installed', time() );
+        }
+
+        update_option('mr_9_vesion', MR_9_VERSION );
     }
 }
 
