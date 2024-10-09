@@ -13,6 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
+
+/**
+ * Composer Autoload File Path Here
+ * 
+ * */
+include_once __DIR__ . "/vendor/autoload.php"; 
+
 /**
  * This is the MR-9 Plugin Main Class
  */ 

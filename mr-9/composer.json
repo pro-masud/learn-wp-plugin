@@ -13,7 +13,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Promasud\\Mr9\\": "src/"
+            "Promasud\\Mr9\\": "includes/"
         },
         "files": []
     }
