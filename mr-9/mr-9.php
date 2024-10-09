@@ -13,24 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-
 /**
  * Composer Autoload File Path Here
- * 
- * */
+ */ 
 include_once __DIR__ . "/vendor/autoload.php"; 
 
 /**
  * This is the MR-9 Plugin Main Class
  */ 
-
 final class MR_9 {
     /**
      * Plugin Version
      * 
      * @var string
      */ 
-    private static $version = '1.0';
+    const version = '1.0';
 
     /**
      * Class Construct Function Here
@@ -38,9 +35,9 @@ final class MR_9 {
     function __construct() {
         $this->define_constants();
 
-        register_activation_hook(__FILE__, [$this, 'plugin_activate'] );
+        register_activation_hook(__FILE__, [ $this, 'plugin_activate' ]);
         
-        add_action('plugin_loaded', [ $this, 'init_plugin' ] );
+        add_action('plugins_loaded', [ $this, 'mr_9_init_plugin' ]);
     }
 
     /**
@@ -62,32 +59,32 @@ final class MR_9 {
      * Defines constants used in the plugin
      */ 
     public function define_constants() {
-        define('MR_9_VERSION', self::$version);
+        define('MR_9_VERSION', self::version);
         define('MR_9_FILE', __FILE__);
         define('MR_9_PATH', __DIR__);
-        define('MR_9_URL', plugins_url('', MR_9_FILE ));
+        define('MR_9_URL', plugins_url('', MR_9_FILE));
         define('MR_9_ASSETS', MR_9_URL . '');
     }
 
     /**
-     * Instalization Plugin
-     * */ 
-    public function plugin_loaded(){
-
+     * Initialization Plugin
+     */ 
+    public function mr_9_init_plugin() {
+        
+        new Promasud\MR_9\Admin\Menu;
     }
 
     /**
      * Define Plugin Activation Function
-     * */ 
-    public function plugin_activate(){
+     */ 
+    public function plugin_activate() {
+        $installed = get_option('mr_9_installed');
 
-        $installed = get_option( 'mr_9_installed' );
-
-        if( ! $installed ){
-            update_option('mr_9_installed', time() );
+        if ( ! $installed ) {
+            update_option('mr_9_installed', time());
         }
 
-        update_option('mr_9_vesion', MR_9_VERSION );
+        update_option('mr_9_version', MR_9_VERSION); // Corrected here
     }
 }
 
