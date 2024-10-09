@@ -31,20 +31,6 @@
             $portfolio.isotope({filter: filterValue});
         });
 
-        /*-----------------------------------------------------
-         magnific popup init
-         ------------------------------------------------------- */
-
-        // $(".portfolio-gallery").each(function () {
-        //     $(this).find(".popup-gallery").magnificPopup({
-        //         type: "image",
-        //         gallery: {
-        //             enabled: true
-        //         }
-        //     });
-        // });
-
-
         var $loadbutton = $( '.loadAjax' );
 
         if( $loadbutton.length ){
@@ -68,14 +54,11 @@
 				};
 				
 				$.ajax({
-					
 					url  : galleryloadajax.action_url,
 					data : $data,
 					type : 'POST',
 					beforeSend : function( xhr ){
-						
 						$button.text( galleryloadajax.btnLodingLabel );
-						
 					},
 					success: function( data ){
 						var $dataload = $('.dataload'),
@@ -94,8 +77,6 @@
 									});
 								}, 300);
 							}
-							
-							
 							// Change Button text From loading
 							$button.text( galleryloadajax.btnLabel ); 
 							
@@ -107,21 +88,13 @@
 						} else {
 							// if no data, remove the button as well
 							$button.remove(); 
-						}
-							
+						}	
 					}
-					
 				});
 				
 				return false;	
-				
 			} );
-
         }
-
-        
-
-
     });
 
 })(jQuery);

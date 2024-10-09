@@ -36,72 +36,92 @@
         public function portfolio_short_code(){
             ob_start();
             ?>
-                <div class="section" data-aos="fade">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <ul class="portfolio-filter text-center">
-                                        <li class="active">
-                                            <a href="#" data-filter="*"><?php esc_html_e('All', 'portfolio' ) ?></a>
-                                        </li>
-                                        <?php 
-                                            $categorys = get_terms(
-                                            "category", array(
-                                                    'hide_empty' => true,
-                                                )
-                                            );
-
-                                            if(!empty($categorys) ){
-                                                foreach( $categorys as $category): ?>
-                                                    <li>
-                                                        <a href="#" data-filter=".<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
-                                                    </li>
-                                                <?php endforeach;
-                                            }
-                                        ?>
-                                    </ul>
-                                </div>
-                                <div class="portfolio--items portfolio-grid portfolio-gallery grid-4 gutter">
+            <div class="section bg-white pt-2 pb-2 text-center" data-aos="fade">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <ul class="portfolio-filter text-center">
+                                    <li class="active">
+                                        <a href="#" data-filter="*"><?php esc_html_e('All', 'portfolio' ) ?></a>
+                                    </li>
                                     <?php 
-                                        $args = [
-                                            'post_type' => 'portfolio',
-                                            'posts_per_page' => 4,
-                                        ];
+                                        $categorys = get_terms(
+                                        "category", array(
+                                                'hide_empty' => true,
+                                            )
+                                        );
 
-                                        $portfoli_query = new WP_Query( $args );
+                                        if(!empty($categorys) ){
+                                            foreach( $categorys as $category): ?>
+                                                <li>
+                                                    <a href="#" data-filter=".<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
+                                                </li>
+                                            <?php endforeach;
+                                        }
+                                    ?>
+                                </ul>
+                            </div>
 
-                                        if($portfoli_query -> have_posts()){
+                            <div class="portfolio-grid portfolio-gallery grid-4 gutter">
+                                    
+                            <?php
 
-                                            while($portfoli_query -> have_posts()):
-                                                $portfoli_query->the_post(); 
-                                                $terms = get_the_terms(get_the_ID(), 'category');
+                                $args = array(
+                                    'post_type' => 'portfolio',
+                                    'posts_per_page' => 2,
+                                );
 
-                                                $single_terms = '';
-                                                if($terms){
-                                                    foreach($terms as $term){
-                                                        $slug =  $term -> slug;
-                                                    }
-                                                }
-                                            ?>
-                                                <div class="portfolio-item <?php  foreach($terms as $term){ 
-                                                    echo esc_html($term -> slug);
-                                                    } ?> ">
-                                                    <a href="<?php the_permalink(); ?>" class="portfolio-image popup-gallery" title="Bread">
-                                                        <?php the_post_thumbnail(); ?>
-                                                        <div class="portfolio-hover-title">
-                                                            <div class="portfolio-content">
-                                                                <h4><?php echo the_title(); ?></h4>
-                                                                <div class="portfolio-category">
-                                                                    <?php  foreach($terms as $term){ ?>
-                                                                        <span><?php echo esc_html($term -> name); ?></span>
-                                                                    <?php  } ?>
-                                                                </div>
-                                                            </div>
+                                $query = new WP_Query( $args );
+
+                                // Localize
+                                wp_localize_script(
+                                    'portfolio-js',
+                                    'galleryloadajax',
+                                    array(
+                                        'action_url' => admin_url( 'admin-ajax.php' ),
+                                        'current_page' => ( get_query_var('paged') ) ? get_query_var('paged') : 1,
+                                        'posts' => json_encode( $query->query_vars ),
+                                        'max_pages' => $query->max_num_pages,
+                                        'postNumber' => 2,
+                                        'col' => 3,
+                                        'btnLabel' => esc_html__( 'Load More', 'textdomain' ),
+                                        'btnLodingLabel' => esc_html__( 'Loading....', 'textdomain' ),
+                                    )
+                                );
+
+         if( $query->have_posts() ):
+                                    while( $query->have_posts() ): $query->the_post();
+                                    $terms = get_the_terms( get_the_ID(), 'category' );
+                                    $cat = array();
+                                    $id = '';
+                                    if( $terms ){
+                                        foreach( $terms as $term ){
+                                            $cat[] = $term->name.' ';
+                                            $slug = $term->slug;
+                                            $id  .= ' '.$term->slug.'-'.$term->term_id;
+                                        }
+                                    }
+                                    ?>
+                                        <div class="portfolio-item <?php  
+                                            foreach($terms as $term){ 
+                                                echo esc_html($term -> slug);
+                                            } ?> ">
+                                            <a href="<?php the_permalink(); ?>" class="portfolio-image popup-gallery" title="Bread">
+                                                <?php the_post_thumbnail(); ?>
+                                                <div class="portfolio-hover-title">
+                                                    <div class="portfolio-content">
+                                                        <h4><?php echo the_title(); ?></h4>
+                                                        <div class="portfolio-category">
+                                                            <?php  foreach($terms as $term){ ?>
+                                                                <span><?php echo esc_html($term -> name); ?></span>
+                                                            <?php  } ?>
                                                         </div>
-                                                    </a>
+                                                    </div>
                                                 </div>
-                                            <?php
+                                            </a>
+                                        </div>
+                                    <?php
                                             endwhile;
                                             wp_reset_postdata();
                                             echo "<div class='dataload'></div>";
@@ -110,15 +130,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="load-more-btn">
-                                    <a href="#" class="btn default-btn loadAjax">Load More</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+            </div>
             <?php
            return ob_get_clean();
         }
