@@ -31,11 +31,9 @@ final class MR_9 {
     function __construct() {
         $this->define_constants();
 
-
-        /**
-         * Plugin Activation Hook
-        */
         register_activation_hook(__FILE__, [$this, 'plugin_activate'] );
+        
+        add_action('plugin_loaded', [ $this, 'init_plugin' ] );
     }
 
     /**
@@ -62,6 +60,13 @@ final class MR_9 {
         define('MR_9_PATH', __DIR__);
         define('MR_9_URL', plugins_url('', MR_9_FILE ));
         define('MR_9_ASSETS', MR_9_URL . '');
+    }
+
+    /**
+     * Instalization Plugin
+     * */ 
+    public function plugin_loaded(){
+
     }
 
     /**
