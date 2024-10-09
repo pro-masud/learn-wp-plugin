@@ -52,6 +52,10 @@ final class MR_9 {
      */ 
     public function define_constants() {
         define('MR_9_VERSION', self::$version);
+        define('MR_9_FILE', __FILE__);
+        define('MR_9_PATH', __DIR__);
+        define('MR_9_URL', plugins_url('', MR_9_FILE ));
+        define('MR_9_ASSETS', MR_9_URL . '');
     }
 }
 
