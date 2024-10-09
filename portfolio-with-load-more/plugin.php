@@ -66,7 +66,6 @@
                             <div class="portfolio-grid portfolio-gallery grid-4 gutter">
                                     
                             <?php
-
                                 $args = array(
                                     'post_type' => 'portfolio',
                                     'posts_per_page' => 2,
@@ -90,8 +89,9 @@
                                     )
                                 );
 
-         if( $query->have_posts() ):
-                                    while( $query->have_posts() ): $query->the_post();
+                                if( $query->have_posts() ):
+                                    while( $query->have_posts() ):
+                                    $query->the_post();
                                     $terms = get_the_terms( get_the_ID(), 'category' );
                                     $cat = array();
                                     $id = '';
@@ -122,10 +122,11 @@
                                             </a>
                                         </div>
                                     <?php
-                                            endwhile;
-                                            wp_reset_postdata();
-                                            echo "<div class='dataload'></div>";
-                                        }
+                                        endwhile;
+                                    
+                                        wp_reset_postdata();
+                                        echo "<div class='dataload'></div>";
+                                    endif;
                                     ?>
                                 </div>
                             </div>
@@ -134,7 +135,7 @@
                 </div>
             </div>
             <?php
-           return ob_get_clean();
+            return ob_get_clean();
         }
 
         // Register Custom Post Types
