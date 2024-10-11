@@ -71,7 +71,11 @@ final class MR_9 {
      */ 
     public function mr_9_init_plugin() {
         
-        new Promasud\MR_9\Admin();
+        if(is_admin()){
+            new Promasud\MR_9\Admin();
+        }else{
+            new Promasud\MR_9\Frontend();
+        }
     }
 
     /**
