@@ -3,7 +3,7 @@
         <?php _e('New Address', 'mr-9') ?>
     </h1>
 
-    <form action="" method="">
+    <form action="" method="post">
         <table class="form-table">
            <tbody>
                 <tr scope="row">

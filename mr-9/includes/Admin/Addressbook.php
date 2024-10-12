@@ -37,8 +37,15 @@ class Addressbook {
             return;
         }
 
-        if( ! wp_verify_nonce( $_POST['_wpnonce'], 'new-address')){
+        if( ! wp_verify_nonce( $_POST['_wpnonce'], 'new-mr9')){
             wp_die( 'Are you cheating?' );
         }
+
+        if( ! current_user_can( 'manage_options' )){
+            wp_die( 'Are you Cheating?' );
+        }
+
+        var_dump($_POST );
+        exit;
     }
 }
