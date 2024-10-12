@@ -32,6 +32,7 @@
                 </tr>
            </tbody>
         </table>
-        <?php submit_button(__('Submit Address', 'mr-9'), 'primary', 'submit', true, null ); ?>
+        <?php wp_nonce_field( 'new-mr9' ); ?>
+        <?php submit_button(__('Submit Address', 'mr-9'), 'primary', 'submit_address', true, null ); ?>
     </form>
 </div>
