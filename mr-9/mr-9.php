@@ -82,13 +82,9 @@ final class MR_9 {
      * Define Plugin Activation Function
      */ 
     public function plugin_activate() {
-        $installed = get_option('mr_9_installed');
-
-        if ( ! $installed ) {
-            update_option('mr_9_installed', time());
-        }
-
-        update_option('mr_9_version', MR_9_VERSION); // Corrected here
+      $installers = new Promasud\MR_9\Installers();
+      
+      $installers->run();
     }
 }
 

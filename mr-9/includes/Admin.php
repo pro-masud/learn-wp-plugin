@@ -8,6 +8,10 @@ class Admin{
         new Admin\Menu();
     }
 
+    /**
+     * Addressbook handle control function here
+     * */ 
+
     public function dispatch_actions(){
         $addressbook = new Admin\Addressbook();
 
