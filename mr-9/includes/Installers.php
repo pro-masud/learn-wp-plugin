@@ -1,6 +1,11 @@
 <?php 
 namespace Promasud\MR_9;
 
+/**
+ * 
+ * 
+ * 
+ * */ 
 class Installers{
     
     public function run(){
@@ -10,6 +15,11 @@ class Installers{
         
     }
 
+    /**
+     * 
+     * Plugin Version Check 
+     * 
+     * */ 
     public function add_version(){
         $installed = get_option('mr_9_installed');
 
@@ -17,8 +27,15 @@ class Installers{
             update_option('mr_9_installed', time());
         }
 
-        update_option('mr_9_version', MR_9_VERSION);
+        update_option('mr_9_version', MR_9_VERSION); // Corrected here
     }
+
+
+    /**
+     * 
+     * Create a Database Table Create Table Function
+     * 
+     * */ 
 
     public function create_table(){
         
