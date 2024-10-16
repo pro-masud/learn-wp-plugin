@@ -3,7 +3,7 @@ namespace Promasud\MR_9;
 
 /**
  * 
- * 
+ * Main Class Installers
  * 
  * */ 
 class Installers{

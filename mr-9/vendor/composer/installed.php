@@ -3,7 +3,7 @@
         'name' => 'promasud/mr-9',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'c84c6468c706894d325a62315d566553200296e5',
+        'reference' => '76d5a2a5b9af37863f6fcafec01615fc5c342d06',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'promasud/mr-9' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c84c6468c706894d325a62315d566553200296e5',
+            'reference' => '76d5a2a5b9af37863f6fcafec01615fc5c342d06',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

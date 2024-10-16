@@ -24,7 +24,6 @@ class Addressbook {
                 $template = __DIR__ . '/views/address-list.php';
                 break;
         }
-        
 
         if( file_exists( $template ) ){
             include $template;
@@ -44,6 +43,8 @@ class Addressbook {
         if( ! current_user_can( 'manage_options' )){
             wp_die( 'Are you Cheating?' );
         }
+
+        var_dump( mr9_insert_address() );
 
         var_dump($_POST );
         exit;
