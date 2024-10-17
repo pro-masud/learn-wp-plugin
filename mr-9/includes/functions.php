@@ -63,3 +63,10 @@ function mr9_get_address( $args = [] ){
 
     return $items;
 }
+
+
+function mr9_address_count(){
+    global $wpdb;
+
+    return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}mr9_addresses" );
+}
