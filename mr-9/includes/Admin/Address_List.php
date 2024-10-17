@@ -33,6 +33,19 @@ class Address_List extends \WP_List_Table {
     }
 
     public function prepare_items() {
-        # code.....
+        $column = $this->get_columns();
+        $hidden = [];
+        $sortable = $this->get_sortable_columns();
+
+        $per_page = 20;
+
+        $this->_column_headers = [ $column, $hidden, $sortable ];
+
+        $this->items = mr9_get_address();
+
+        $this->set_pagination_args( [
+            'total_items'   => mr9_address_count(),
+            'per_page'      => $per_page,
+        ] );
     }
 }
