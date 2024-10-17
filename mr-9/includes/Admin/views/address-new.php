@@ -2,7 +2,7 @@
     <h1 class="wp-heading-inline" >
         <?php _e('New Address', 'mr-9') ?>
     </h1>
-
+    <?php var_dump($this->errors); ?>
     <form action="" method="post">
         <table class="form-table">
            <tbody>
