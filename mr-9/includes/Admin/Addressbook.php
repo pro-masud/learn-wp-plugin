@@ -10,6 +10,7 @@ class Addressbook {
 
     public function mr9_plugin_page(){
         $action = isset( $_GET['action']) ? $_GET['action'] : 'list';
+        $id     = isset( $_GET['id']) ? intval( $_GET['id'] ) : 0;
 
         switch($action){
             case 'new':
@@ -17,6 +18,7 @@ class Addressbook {
                 break;
 
             case 'edit':
+                $address = mr9_single_address($id);
                 $template = __DIR__ . '/views/address-edit.php';
                 break;
 

@@ -2,7 +2,7 @@
     <h1 class="wp-heading-inline" >
         <?php _e('Edit Address', 'mr-9') ?>
     </h1>
-    <?php //var_dump($this->errors['name']); ?>
+    <?php var_dump($address); ?>
     <form action="" method="post">
         <table class="form-table">
            <tbody>
@@ -11,7 +11,7 @@
                         <label for="name"><?php _e('Name', 'mr-9' ) ?></label>
                     </th>
                     <td>
-                        <input type="text" placeholder="Name" name="name" id="name" class="regular-text">
+                        <input type="text" placeholder="Name" name="name" id="name" value="<?php echo esc_attr($address->name ); ?>" class="regular-text">
                         <?php if( $this->has_error( 'name' ) ){ ?>
                             <p class="description error"><?php echo $this->get_errors( 'name' ); ?></p>
                         <?php } ?>
@@ -22,7 +22,7 @@
                         <label for="address"><?php _e('Address', 'mr-9' ) ?></label>
                     </th>
                     <td>
-                        <input type="text" placeholder="address" name="address" id="address" class="regular-text">
+                        <input type="text" placeholder="address" name="address" id="address" value="<?php echo esc_attr($address->address ); ?>" class="regular-text">
                     </td>
                 </tr>
                 <tr scope="row <?php echo $this->has_error( 'phone' ) ? 'form-invalid' : ''; ?>">
@@ -30,7 +30,7 @@
                         <label for="phone"><?php _e('Phone', 'mr-9' ) ?></label>
                     </th>
                     <td>
-                        <input type="text" placeholder="Phone" name="phone" id="phone" class="regular-text">
+                        <input type="text" placeholder="Phone" name="phone" id="phone" value="<?php echo esc_attr($address->phone ); ?>" class="regular-text">
                         <?php if( $this->has_error( 'phone' ) ){ ?>
                             <p class="description error"><?php echo $this->get_errors( 'phone' ); ?></p>
                         <?php } ?>
