@@ -45,6 +45,22 @@ class Address_List extends \WP_List_Table {
         }
     }
 
+    /**
+     * Column Name Change Options Here
+     * */ 
+
+    public function column_name( $item ){
+        return sprintf( '<a href="%1$s"><strong>%2$s</strong></a>', admin_url('admin.php?page=mr-9&action=view&id=' . $item->id ), $item->name );
+    }
+
+     /**
+     * Column Name Change Options Here
+     * */ 
+
+     public function column_cb( $item ){
+        return sprintf( '<input type="checkbox" name="address_id" value="%d">',  $item->id );
+    }
+
     public function prepare_items() {
         $column = $this->get_columns();
         $hidden = [];
