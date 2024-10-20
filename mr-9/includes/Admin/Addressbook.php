@@ -2,9 +2,11 @@
 
 namespace Promasud\MR_9\Admin;
 
+use Promasud\MR_9\Traits\Form_Error;
+
 class Addressbook {
 
-    public $errors = []; 
+    use Form_Error;
 
     public function mr9_plugin_page(){
         $action = isset( $_GET['action']) ? $_GET['action'] : 'list';
@@ -77,21 +79,6 @@ class Addressbook {
         wp_redirect( $redirected_to );
 
         exit;
-    }
-
-    public function has_error( $key ){
-        return isset( $this->errors[ $key ] ) ? true : false;
-    }
-
-    
-
-    public function get_errors( $key ){
-
-        if(isset(  $this->errors[ $key ] )){
-            return  $this->errors[ $key ];
-        }
-
-        return false;
     }
 
 }
