@@ -2,7 +2,7 @@
     <h1 class="wp-heading-inline" >
         <?php _e('New Address', 'mr-9') ?>
     </h1>
-    <?php var_dump($this->errors); ?>
+    <?php //var_dump($this->errors['name']); ?>
     <form action="" method="post">
         <table class="form-table">
            <tbody>
@@ -12,6 +12,9 @@
                     </th>
                     <td>
                         <input type="text" placeholder="Name" name="name" id="name" class="regular-text">
+                        <?php if( $this->has_error( 'name' ) ){ ?>
+                            <p class="description error"><?php echo $this->get_errors( 'name' ); ?></p>
+                        <?php } ?>
                     </td>
                 </tr>
                 <tr scope="row">
@@ -28,6 +31,9 @@
                     </th>
                     <td>
                         <input type="text" placeholder="Phone" name="phone" id="phone" class="regular-text">
+                        <?php if( $this->has_error( 'phone' ) ){ ?>
+                            <p class="description error"><?php echo $this->get_errors( 'phone' ); ?></p>
+                        <?php } ?>
                     </td>
                 </tr>
            </tbody>
