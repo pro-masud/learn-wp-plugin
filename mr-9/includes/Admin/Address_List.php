@@ -1,7 +1,6 @@
 <?php 
 namespace Promasud\MR_9\Admin;
 
-
 if( !class_exists( 'WP_List_Table' )){
     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
@@ -21,7 +20,6 @@ class Address_List extends \WP_List_Table {
         ]);
     }
 
-
     public function get_columns(){
         return [
             'cb'            => '<input type="checkbox"',
@@ -30,6 +28,22 @@ class Address_List extends \WP_List_Table {
             'phone'         => __( 'Phone', 'mr-9' ),
             'created_at'    => __( 'Date', 'mr-9' ),
         ];
+    }
+
+    /**
+     * Column Default Function 
+     * 
+     * */
+    protected function column_default( $item, $column_name ){
+        echo $column_name;
+        switch( $column_name ){
+            case 'value':
+                # code
+                break;
+            
+            default: 
+            return isset( $item->$column_name) ? $item->$column_name : '';
+        }
     }
 
     public function prepare_items() {

@@ -57,7 +57,7 @@ function mr9_get_address( $args = [] ){
 
     $items = $wpdb->get_results(
         $wpdb->prepare(
-            "SELECT * FROM {4WPDB->prefix}mr9_addresses ORDER BY %s %s LIMIT %d, %d",
+            "SELECT * FROM {$wpdb->prefix}mr9_addresses ORDER BY %s %s LIMIT %d, %d",
             $args['orderby'], $args['order'], $args['offset'], $args['number']
     ));
 
