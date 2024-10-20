@@ -65,7 +65,6 @@ function mr9_get_address( $args = [] ){
 
     $items = $wpdb->get_results( $sql );
 
-
     return $items;
 }
 
@@ -74,4 +73,17 @@ function mr9_address_count(){
     global $wpdb;
 
     return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}mr9_addresses" );
+}
+
+
+/**
+ * fetch single data form address book
+ * */ 
+
+function mr9_single_address( $id ){
+    global $wpdb;
+
+    return $wpdb->get_row(
+        $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}mr_address WHERE id ='%d'", $id )
+    );
 }
