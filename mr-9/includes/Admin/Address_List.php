@@ -31,6 +31,18 @@ class Address_List extends \WP_List_Table {
     }
 
     /**
+     * get sortable columns
+     * */ 
+    public function get_sortable_columns(){
+        $sortable_columns = [
+            'name'          => [ 'name', true ],
+            'created_at'    => [ 'created_at', true ]
+        ];
+
+        return $sortable_columns;
+    }
+
+    /**
      * Column Default Function 
      * 
      * */
@@ -73,11 +85,24 @@ class Address_List extends \WP_List_Table {
         $hidden = [];
         $sortable = $this->get_sortable_columns();
 
-        $per_page = 20;
-
+        
         $this->_column_headers = [ $column, $hidden, $sortable ];
+        
+        $per_page = 5;
+        $current_page = $this->get_pagenum();
+        $offset = ( $current_page - 1 ) * $per_page;
 
-        $this->items = mr9_get_address();
+        $args = [
+            'number'    => $per_page,
+            'offset'    => $offset,
+        ];
+
+        if( isset( $_REQUEST['ordery'] ) && isset( $_REQUEST['order'] ) ){
+            $args['orderby']    = $_REQUEST['orderby'];
+            $args['order']      = $_REQUEST['order'];
+        }
+
+        $this->items = mr9_get_address( $args);
 
         $this->set_pagination_args( [
             'total_items'   => mr9_address_count(),
