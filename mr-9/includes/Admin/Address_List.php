@@ -35,7 +35,6 @@ class Address_List extends \WP_List_Table {
      * 
      * */
     protected function column_default( $item, $column_name ){
-        echo $column_name;
         switch( $column_name ){
             case 'value':
                 # code
