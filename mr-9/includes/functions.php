@@ -84,6 +84,22 @@ function mr9_single_address( $id ){
     global $wpdb;
 
     return $wpdb->get_row(
-        $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}mr_address WHERE id ='%d'", $id )
+        $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}mr9_addresses WHERE id ='%d'", $id )
+    );
+}
+
+/**
+ * 
+ * fetch single data delete form address book
+ * 
+ * */
+
+function mr9_delete_address( $id ){
+    global $wpdb;
+
+    return $wpdb->delete(
+        $wpdb->prefix . 'mr9_addresses',
+        [ 'id'      => $id ],
+        [ '%d' ]
     );
 }
