@@ -22,7 +22,7 @@
                         <label for="address"><?php _e('Address', 'mr-9' ) ?></label>
                     </th>
                     <td>
-                        <input type="text" placeholder="address" name="address" id="address" value="<?php echo esc_attr($address->address ); ?>" class="regular-text">
+                        <textarea name="address" id="address" placeholder="address" class="regular-text"><?php echo esc_attr($address->address ); ?></textarea>
                     </td>
                 </tr>
                 <tr scope="row <?php echo $this->has_error( 'phone' ) ? 'form-invalid' : ''; ?>">
