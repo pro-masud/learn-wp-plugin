@@ -50,16 +50,21 @@ function mr9_get_address( $args = [] ){
         'number' => 20,
         'offset' => 0,
         'orderby' => 'id',
-        'order' => 'ASC',
+        'order' => 'asc',
     ];
 
     $args = wp_parse_args( $args, $defaults );
 
-    $items = $wpdb->get_results(
+    $sql = $wpdb->prepare(
         $wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}mr9_addresses ORDER BY %s %s LIMIT %d, %d",
-            $args['orderby'], $args['order'], $args['offset'], $args['number']
+            "SELECT * FROM {$wpdb->prefix}mr9_addresses
+            ORDER BY {$args['orderby']} {$args['order']}
+            LIMIT %d, %d",
+            $args['offset'], $args['number']
     ));
+
+    $items = $wpdb->get_results( $sql );
+
 
     return $items;
 }
