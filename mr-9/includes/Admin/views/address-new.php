@@ -6,7 +6,7 @@
     <form action="" method="post">
         <table class="form-table">
            <tbody>
-                <tr scope="row">
+                <tr scope="row <?php echo $this->has_error( 'name' ) ? 'form-invalid' : ''; ?>" >
                     <th>
                         <label for="name"><?php _e('Name', 'mr-9' ) ?></label>
                     </th>
@@ -25,7 +25,7 @@
                         <input type="text" placeholder="address" name="address" id="address" class="regular-text">
                     </td>
                 </tr>
-                <tr scope="row">
+                <tr scope="row <?php echo $this->has_error( 'phone' ) ? 'form-invalid' : ''; ?>">
                     <th>
                         <label for="phone"><?php _e('Phone', 'mr-9' ) ?></label>
                     </th>
