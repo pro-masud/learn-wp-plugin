@@ -83,6 +83,7 @@ class Addressbook {
         return isset( $this->errors[ $key ] ) ? true : false;
     }
 
+    
 
     public function get_errors( $key ){
 
