@@ -17,7 +17,6 @@ function mr9_insert_address( $args = [] ){
 
     $data = wp_parse_args( $args, $defaults );
 
-
     if( isset( $data['id'] )){
 
         $id = $data['id'];
