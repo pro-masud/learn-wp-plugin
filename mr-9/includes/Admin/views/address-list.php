@@ -9,6 +9,12 @@
         </div>
     <?php } ?>
 
+    <?php if( isset( $_GET['address-delete'] )){ ?>
+        <div class="notice notice-success">
+            <p><?php echo __( 'Address Book Data Delete Successfully', 'mr-9'); ?></p>
+        </div>
+    <?php } ?>
+
     <form action="" method="post">
         <?php
             $table = new Promasud\MR_9\Admin\Address_List();

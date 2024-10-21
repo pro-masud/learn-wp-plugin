@@ -17,5 +17,6 @@ class Admin{
 
     public function dispatch_actions( $addressbook ){
         add_action('admin_init', [ $addressbook, 'form_handle' ]);
+        add_action('admin_post_mr9-delete-address', [ $addressbook, 'mr9_address_delete' ]);
     }
 }

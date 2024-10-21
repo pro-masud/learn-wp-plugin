@@ -94,4 +94,26 @@ class Addressbook {
         exit;
     }
 
+
+    public function mr9_address_delete( ){
+        if( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'mr-9-delete-address')){
+            wp_die( 'Are you cheating?' );
+        }
+
+        if( ! current_user_can( 'manage_options' )){
+            wp_die( 'Are you Cheating?' );
+        }
+
+        $id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
+
+        if( mr9_delete_address( $id )){
+            $redirected_to = admin_url( 'admin.php?page=mr-9&address-delete=true' );
+        }else{
+            $redirected_to = admin_url( 'admin.php?page=mr-9&address-delete=false' );
+        }
+
+        wp_redirect( $redirected_to );
+        exit;
+    }
+
 }
