@@ -83,7 +83,11 @@ class Addressbook {
             wp_die(  $insert_id->get_error_message() );
         }
 
-        $redirected_to = admin_url( 'admin.php?page=mr-9&inserted=true' );
+        if( $id ){
+            $redirected_to = admin_url( 'admin.php?page=mr-9&action=edit&address-updated=true&id=' . $id );
+        }else{
+            $redirected_to = admin_url( 'admin.php?page=mr-9&inserted=true' );
+        }
 
         wp_redirect( $redirected_to );
 

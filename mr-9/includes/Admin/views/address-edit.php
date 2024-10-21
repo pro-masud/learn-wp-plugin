@@ -2,6 +2,11 @@
     <h1 class="wp-heading-inline" >
         <?php _e('Edit Address', 'mr-9') ?>
     </h1>
+    <?php if( isset( $_GET['address-updated'] )){ ?>
+        <div class="notice notice-success">
+            <p><?php echo __( 'Address Book Data Updated Successfully', 'mr-9'); ?></p>
+        </div>
+    <?php } ?>
     <form action="" method="post">
         <table class="form-table">
            <tbody>
