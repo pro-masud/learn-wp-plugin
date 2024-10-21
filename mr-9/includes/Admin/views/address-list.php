@@ -3,6 +3,12 @@
 
     <a class="page-title-action" href="<?php echo admin_url("admin.php?page=mr-9&action=new"); ?>"><?php _e('Add New', 'mr-9'); ?></a>
 
+    <?php if( isset( $_GET['inserted'] )){ ?>
+        <div class="notice notice-success">
+            <p><?php echo __( 'Address Book Data Insert Successfully', 'mr-9'); ?></p>
+        </div>
+    <?php } ?>
+
     <form action="" method="post">
         <?php
             $table = new Promasud\MR_9\Admin\Address_List();
