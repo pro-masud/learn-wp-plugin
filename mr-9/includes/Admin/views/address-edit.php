@@ -2,7 +2,6 @@
     <h1 class="wp-heading-inline" >
         <?php _e('Edit Address', 'mr-9') ?>
     </h1>
-    <?php var_dump($address); ?>
     <form action="" method="post">
         <table class="form-table">
            <tbody>
@@ -22,7 +21,7 @@
                         <label for="address"><?php _e('Address', 'mr-9' ) ?></label>
                     </th>
                     <td>
-                        <textarea name="address" id="address" placeholder="address" class="regular-text"><?php echo esc_attr($address->address ); ?></textarea>
+                        <textarea name="address" id="address" placeholder="address" class="regular-text"><?php echo esc_textarea($address->address ); ?></textarea>
                     </td>
                 </tr>
                 <tr scope="row <?php echo $this->has_error( 'phone' ) ? 'form-invalid' : ''; ?>">
@@ -38,6 +37,7 @@
                 </tr>
            </tbody>
         </table>
+        <input type="hidden" name="id" value="<?php echo esc_attr($address->id); ?>" >
         <?php wp_nonce_field( 'new-mr9' ); ?>
         <?php submit_button(__('Submit Address', 'mr-9'), 'primary', 'submit_address', true, null ); ?>
     </form>

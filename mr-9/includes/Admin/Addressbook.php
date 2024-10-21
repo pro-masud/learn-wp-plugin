@@ -50,6 +50,7 @@ class Addressbook {
             wp_die( 'Are you Cheating?' );
         }
 
+        $id = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
         $name = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '' ;
         $address = isset( $_POST['address'] ) ? sanitize_text_field( $_POST['address'] ) : '' ;
         $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '' ;
@@ -66,11 +67,17 @@ class Addressbook {
             return;
         }
 
-        $insert_id = mr9_insert_address([
+        $args = [
             'name' => $name,
             'address' => $address,
             'phone' => $phone
-        ] );
+        ];
+
+        if( $id ){
+            $args['id'] = $id;
+        }
+
+        $insert_id = mr9_insert_address( $args );
         
         if( is_wp_error( $insert_id )){
             wp_die(  $insert_id->get_error_message() );

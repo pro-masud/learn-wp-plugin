@@ -17,23 +17,46 @@ function mr9_insert_address( $args = [] ){
 
     $data = wp_parse_args( $args, $defaults );
 
-    $inserted = $wpdb->insert(
-        "{$wpdb->prefix}mr9_addresses",
-        $data,
-        [
-            '%s',
-            '%s',
-            '%s',
-            '%d',
-            '%s',
-        ]
-    );
 
-    if( ! $inserted ) {
-        return new \WP_Error( 'failed-to-insert', __('Failed to insert data', 'mr-9' ) );
+    if( isset( $data['id'] )){
+
+        $id = $data['id'];
+        unset( $data['id'] );
+
+        $update = $wpdb->update(
+            $wpdb->prefix . 'mr9_addresses',
+            $data,
+            [ 'id' => $id ],
+            [
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+            ],
+            [ '%d' ]
+        );
+
+        return $update;
+    }else{
+        $inserted = $wpdb->insert(
+            "{$wpdb->prefix}mr9_addresses",
+            $data,
+            [
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+            ]
+        );
+    
+        if( ! $inserted ) {
+            return new \WP_Error( 'failed-to-insert', __('Failed to insert data', 'mr-9' ) );
+        }
+    
+        return $wpdb->insert_id;
     }
-
-    return $wpdb->insert_id;
 }
 
 /**
