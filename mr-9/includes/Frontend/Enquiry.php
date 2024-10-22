@@ -40,5 +40,4 @@ class Enquiry{
 
        return ob_get_clean();
     }
-
 }
