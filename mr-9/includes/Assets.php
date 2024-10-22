@@ -5,6 +5,7 @@ class Assets{
 
     function __construct(){
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ]);
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
     }
 
     public function get_scripts(){
@@ -22,6 +23,10 @@ class Assets{
             'frontend-style' => [
                 'src'       => MR_9_ASSETS . '/css/front-end.css',
                 'version'   => filemtime( MR_9_PATH . '/assets/css/front-end.css' ),
+            ],
+            'mr-admin-css' => [
+                'src'       => MR_9_ASSETS . '/css/admin.css',
+                'version'   => filemtime( MR_9_PATH . '/assets/css/admin.css' ),
             ]
         ];
     }
