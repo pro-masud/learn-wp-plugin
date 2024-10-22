@@ -7,6 +7,9 @@ class Shortcode {
     }
 
     public function mr_9_render_shortcode($attr, $content = ''){
-        echo 'This is a Shortcode';
+        wp_enqueue_script( 'frontend-script' );
+        wp_enqueue_style( 'frontend-style' );
+
+        echo '<div class="mr9-shortcode">This is a Shortcode</div>';
     }
 }
