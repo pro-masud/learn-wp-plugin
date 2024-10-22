@@ -63,13 +63,15 @@ final class MR_9 {
         define('MR_9_FILE', __FILE__);
         define('MR_9_PATH', __DIR__);
         define('MR_9_URL', plugins_url('', MR_9_FILE));
-        define('MR_9_ASSETS', MR_9_URL . '');
+        define('MR_9_ASSETS', MR_9_URL . '/assets');
     }
 
     /**
      * Initialization Plugin
      */ 
     public function mr_9_init_plugin() {
+
+        new Promasud\MR_9\Assets();
         
         if(is_admin()){
             new Promasud\MR_9\Admin();
