@@ -14,6 +14,11 @@ class Assets{
                 'src'       => MR_9_ASSETS . '/js/front-end.js',
                 'version'   => filemtime( MR_9_PATH . '/assets/js/front-end.js' ),
                 'deps'       => [ 'jquery' ]
+            ],
+            'mr-enquiry-script' => [
+                'src'       => MR_9_ASSETS . '/js/enquiry.js',
+                'version'   => filemtime( MR_9_PATH . '/assets/js/enquiry.js' ),
+                'deps'       => [ 'jquery' ]
             ]
         ];
     }
@@ -27,6 +32,10 @@ class Assets{
             'mr-admin-css' => [
                 'src'       => MR_9_ASSETS . '/css/admin.css',
                 'version'   => filemtime( MR_9_PATH . '/assets/css/admin.css' ),
+            ],
+            'mr-enquiry-css' => [
+                'src'       => MR_9_ASSETS . '/css/enquiry.css',
+                'version'   => filemtime( MR_9_PATH . '/assets/css/enquiry.css' ),
             ]
         ];
     }
