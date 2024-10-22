@@ -3,12 +3,12 @@
 
         <div class="form-row">
             <label for="name"><?php _e( "Name", 'mr-9' ); ?></label>
-            <input type="text" id="name" value="" required >
+            <input type="text" id="name" name="name" value="" required >
         </div>
 
         <div class="form-row">
             <label for="email"><?php _e( "E-mail", 'mr-9' ); ?></label>
-            <input type="email" id="email" value="" required >
+            <input type="email" id="email" name="email" value="" required >
         </div>
 
         <div class="form-row">
