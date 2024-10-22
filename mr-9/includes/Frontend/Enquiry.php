@@ -15,7 +15,7 @@ class Enquiry{
      * */ 
 
     function __construct(){
-
+        add_shortcode( 'mr9-enquiry', [ $this, 'mr9_render_shortcode' ] );
     }
 
     /**
@@ -29,8 +29,13 @@ class Enquiry{
      *  
      * */
     
-    public function render_shortcode( $atts, $content = '' ){
+    public function mr9_render_shortcode( $atts, $content = '' ){
         
+        ob_start();
+        
+        include __DIR__ . '/views/enquiry.php';
+
+       return ob_get_clean();
     }
 
 }
