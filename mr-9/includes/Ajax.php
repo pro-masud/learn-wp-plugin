@@ -11,6 +11,7 @@ class Ajax{
 
     function __construct(){
         add_action( 'wp_ajax_mr_enquiry', [ $this, 'submit_enquiry']);
+        add_action( 'wp_ajax_noprive_mr_enquiry', [ $this, 'submit_enquiry']);
         add_action( 'wp_ajax_mr9_delete_contact', [ $this, 'delete_address']);
 
     }
