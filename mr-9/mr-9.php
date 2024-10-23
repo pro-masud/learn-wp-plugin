@@ -72,6 +72,10 @@ final class MR_9 {
     public function mr_9_init_plugin() {
 
         new Promasud\MR_9\Assets();
+
+        if (defined('DOING_AJAX') && DOING_AJAX) {
+            new Promasud\MR_9\Ajax();
+        }
         
         if(is_admin()){
             new Promasud\MR_9\Admin();

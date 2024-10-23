@@ -4,13 +4,11 @@
 
         var data = $(this).serialize();
 
-        console.log(data);
-
         $.post( MR9.ajaxurl, data, function( data ){
 
         })
         .fail(function(){
-            alert(MR9.error);
+            
         })
 
     });
