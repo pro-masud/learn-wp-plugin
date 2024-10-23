@@ -15,6 +15,13 @@ class Ajax{
     }
 
     public function submit_enquiry(){
-        echo 'hello';
+        
+        // wp_send_json_success([
+        //     'message'   => 'Enquiry has been send Successfully'
+        // ]);
+
+        wp_send_json_error([
+             'message'   => 'Enquiry has been send Unsuccessfull Data'
+        ]);
     }
 }
