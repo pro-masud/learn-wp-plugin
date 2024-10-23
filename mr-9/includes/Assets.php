@@ -59,10 +59,6 @@ class Assets{
         }
 
 
-        /**
-         * wp_localize_script php to javascript convert data
-         * 
-         * */
         wp_localize_script( 'mr-enquiry-script', 'MR9', [
             'ajaxurl'   => admin_url( 'admin-ajax.php' ),
             'error'     => __("Something went wrong", 'mr-9')
