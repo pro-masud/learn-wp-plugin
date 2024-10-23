@@ -17,7 +17,7 @@ class Ajax{
 
     public function submit_enquiry(){
 
-        if( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'mr9-enquiry-form-2')){
+        if( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'mr9-enquiry-form')){
             wp_send_json_error( [
                 'message'   => 'Nonce verification failed!'
             ] );
