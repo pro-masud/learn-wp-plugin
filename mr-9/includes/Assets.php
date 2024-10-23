@@ -57,5 +57,14 @@ class Assets{
 
             wp_register_style( $handle, $style['src'], $deps, $style['version'] );
         }
+
+
+        /**
+         * wp_localize_script php to javascript convert data
+         * 
+         * */
+        wp_localize_script( 'mr-enquiry-script', 'MR9', [
+            'ajaxurl'   => admin_url( 'admin-ajax.php' )
+        ]); 
     }
 }

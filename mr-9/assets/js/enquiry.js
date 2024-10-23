@@ -6,9 +6,12 @@
 
         console.log(data);
 
-        // $.post( '', {paran1: 'value1'}, function(data, textStatus, xhr){
+        $.post( MR9.ajaxurl, data, function( data ){
 
-        // });
+        })
+        .fail(function(){
+            alert('Something went wrong');
+        })
 
     });
 })(jQuery);
