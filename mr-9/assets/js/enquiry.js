@@ -10,7 +10,7 @@
 
         })
         .fail(function(){
-            alert('Something went wrong');
+            alert(MR9.error);
         })
 
     });
