@@ -69,9 +69,10 @@ class Assets{
             'error'     => __("Something went wrong", 'mr-9')
         ]);
 
-        wp_localize_script( 'mr-admin-script', 'MR9', [
-            'nonce' => wp_create_nonce( 'mr9-admin-nonce' ),
-            'error' => __( 'Something went wrong', 'mr-9' ),
+        wp_localize_script( 'mr-admin-script', 'MR', [
+            'nonce'     => wp_create_nonce( 'mr9-admin-nonce' ),
+            'confirm'   => __( 'Are You Sure ?', 'mr-9'),
+            'error'     => __( 'Something went wrong', 'mr-9' ),
         ]);
     }
 }
