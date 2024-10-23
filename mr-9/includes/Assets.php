@@ -67,6 +67,11 @@ class Assets{
         wp_localize_script( 'mr-enquiry-script', 'MR9', [
             'ajaxurl'   => admin_url( 'admin-ajax.php' ),
             'error'     => __("Something went wrong", 'mr-9')
-        ]); 
+        ]);
+
+        wp_localize_script( 'mr-admin-script', 'MR9', [
+            'nonce' => wp_create_nonce( 'mr9-admin-nonce' ),
+            'error' => __( 'Something went wrong', 'mr-9' ),
+        ]);
     }
 }
