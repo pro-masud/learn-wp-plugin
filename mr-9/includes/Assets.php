@@ -19,6 +19,11 @@ class Assets{
                 'src'       => MR_9_ASSETS . '/js/enquiry.js',
                 'version'   => filemtime( MR_9_PATH . '/assets/js/enquiry.js' ),
                 'deps'       => [ 'jquery' ]
+            ],
+            'mr-admin-script' => [
+                'src'       => MR_9_ASSETS . '/js/admin.js',
+                'version'   => filemtime( MR_9_PATH . '/assets/js/admin.js' ),
+                'deps'       => [ 'jquery', 'wp-util' ]
             ]
         ];
     }

@@ -38,5 +38,6 @@ class Menu {
 
     public function enqueue_scripts(){
         wp_enqueue_style( 'mr-admin-css' );
+        wp_enqueue_script( 'mr-admin-script' );
     }
 }
