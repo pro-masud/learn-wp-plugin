@@ -13,7 +13,6 @@ class Ajax{
         add_action( 'wp_ajax_mr_enquiry', [ $this, 'submit_enquiry']);
         add_action( 'wp_ajax_noprive_mr_enquiry', [ $this, 'submit_enquiry']);
         add_action( 'wp_ajax_mr9_delete_contact', [ $this, 'delete_address']);
-
     }
 
     public function submit_enquiry(){
