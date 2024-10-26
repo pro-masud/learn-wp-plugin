@@ -82,6 +82,8 @@ final class MR_9 {
         }else{
             new Promasud\MR_9\Frontend();
         }
+
+        new Promasud\MR_9\APIs();
     }
 
     /**
