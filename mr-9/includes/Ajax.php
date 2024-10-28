@@ -12,7 +12,7 @@ class Ajax{
     function __construct(){
         add_action( 'wp_ajax_mr_enquiry', [ $this, 'submit_enquiry']);
         add_action( 'wp_ajax_noprive_mr_enquiry', [ $this, 'submit_enquiry']);
-        add_action( 'wp_ajax_mr9_delete_contact', [ $this, 'delete_address']);
+        add_action( 'wp_ajax_mr-delete-contact', [ $this, 'delete_address']);
     }
 
     public function submit_enquiry(){
@@ -33,6 +33,23 @@ class Ajax{
     }
 
     public function delete_address(){
+
+        if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'mr9-admin-nonce' ) ) {
+            wp_send_json_error( [
+                'message' => __( 'Nonce verification failed!', 'mr-9' )
+            ] );
+        }
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( [
+                'message' => __( 'No permission!', 'mr-9' )
+            ] );
+        }
+
+        $id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
+
+        mr9_delete_address( $id );
+        
         wp_send_json_success();
     }
 }

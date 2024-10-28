@@ -72,18 +72,17 @@ function mr9_get_address( $args = [] ){
         'number' => 20,
         'offset' => 0,
         'orderby' => 'id',
-        'order' => 'asc',
+        'order' => 'ASC',
     ];
 
     $args = wp_parse_args( $args, $defaults );
 
     $sql = $wpdb->prepare(
-        $wpdb->prepare(
             "SELECT * FROM {$wpdb->prefix}mr9_addresses
             ORDER BY {$args['orderby']} {$args['order']}
             LIMIT %d, %d",
             $args['offset'], $args['number']
-    ));
+    );
 
     $items = $wpdb->get_results( $sql );
 
@@ -106,7 +105,7 @@ function mr9_single_address( $id ){
     global $wpdb;
 
     return $wpdb->get_row(
-        $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}mr9_addresses WHERE id ='%d'", $id )
+        $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}mr9_addresses WHERE id ='%d'", $id ),
     );
 }
 

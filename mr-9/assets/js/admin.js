@@ -11,8 +11,7 @@
             var self = $(this),
                 id = self.data('id');
     
-    
-            wp.ajax.send('mr9_delete_contact', {
+            wp.ajax.send('mr-delete-contact', {
                 data: {
                     id: id,
                     _wpnonce: MR.nonce

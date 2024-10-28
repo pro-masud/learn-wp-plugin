@@ -8,7 +8,6 @@ class Addressbook extends WP_REST_Controller {
         $this->namespace = 'academy/v1';
         $this->rest_base = 'contacts'; 
     }
-
     public function register_routes(){
        register_rest_route(
             $this->namespace,

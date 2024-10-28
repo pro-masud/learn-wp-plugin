@@ -96,7 +96,7 @@ class Addressbook {
 
 
     public function mr9_address_delete( ){
-        if( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'mr-9-delete-address')){
+        if( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'mr9-admin-nonce')){
             wp_die( 'Are you cheating?' );
         }
 
