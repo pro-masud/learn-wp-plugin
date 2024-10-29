@@ -29,7 +29,9 @@ class Addressbook extends WP_REST_Controller {
      * 
      * @param \WP_REST_Request $request
      * 
-     * $return boolean
+     * @return boolean
+     * 
+     * Description: this function working on user login or return to false option here
      * */
     public function get_items_permissions_check( $request ){
         if( current_user_can( 'manage_options' )){
