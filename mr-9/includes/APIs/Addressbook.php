@@ -22,4 +22,20 @@ class Addressbook extends WP_REST_Controller {
             ],
         );
     }
+
+    /**
+     * 
+     * Checks if a given request has access to read contacts
+     * 
+     * @param \WP_REST_Request $request
+     * 
+     * $return boolean
+     * */
+    public function get_items_permissions_check( $request ){
+        if( current_user_can( 'manage_options' )){
+            return true;
+        }
+
+        return false;
+    }
 }
