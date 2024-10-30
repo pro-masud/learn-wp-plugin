@@ -19,6 +19,7 @@ class Addressbook extends WP_REST_Controller {
                     'permission_callback'   => [ $this, 'get_items_permissions_check' ],
                     'args'                  => $this->get_collection_params(),
                 ],
+                'schema'    => [ $this, 'get_itme_schema' ],
             ],
         );
     }
@@ -39,5 +40,76 @@ class Addressbook extends WP_REST_Controller {
         }
 
         return false;
+    }
+
+    /**
+     * Recrleves a list of address items.
+     * 
+     * @param \WP_REST_Request $request
+     * 
+     * @return \WP_REST_Request/WP_Error
+     * 
+     * */
+
+    public function get_items( $request ){
+        # code...
+    }
+
+    /**
+     * 
+     * Retrieves the contact schema, conforming to JSON Schema.
+     * 
+     * */
+    public function get_itme_schema(){
+        if( $this->schema ){
+            return $this->add_additional_fields_schema( $this->schema );
+        }
+
+        $schema = [
+            '$schema'   => 'http://json-schema.org/draft-04/schema#',
+            'title'     => 'contact',
+            'type'      => 'object',
+            'properties'    => [
+                'id'    => [
+                    'description'   => __( 'Unique identifier for the object.' ),
+                    'type'          => 'integer',
+                    'context'       => [ 'view', 'edit' ],
+                    'readonly'      => true,
+                ],
+                'name' => [
+                    'description' => __( 'Name of the contact.' ),
+                    'type'        => 'string',
+                    'context'     => [ 'view', 'edit' ],
+                    'required'    => true,
+                    'arg_options' => [
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                ],
+                'address' => [
+                    'description' => __( 'Address of the contact.' ),
+                    'type'        => 'string',
+                    'context'     => [ 'view', 'edit' ],
+                    'arg_options' => [
+                        'sanitize_callback' => 'sanitize_textarea_field',
+                    ],
+                ],
+                'phone' => [
+                    'description' => __( 'Phone number of the contact.' ),
+                    'type'        => 'string',
+                    'required'    => true,
+                    'context'     => [ 'view', 'edit' ],
+                    'arg_options' => [
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ],
+                ],
+                'date' => [
+                    'description' => __( "The date the object was published, in the site's timezone." ),
+                    'type'        => 'string',
+                    'format'      => 'date-time',
+                    'context'     => [ 'view' ],
+                    'readonly'    => true,
+                ],
+            ]
+        ];
     }
 }
