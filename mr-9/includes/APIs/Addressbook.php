@@ -52,7 +52,19 @@ class Addressbook extends WP_REST_Controller {
      * */
 
     public function get_items( $request ){
-        # code...
+    $args = [];
+    $params = $this->get_collection_params();
+
+    foreach( $params as $key => $value ){
+        if( isset( $request[ $key ])){
+            $args[ $key ]   = $request[ $key ];
+        }
+    }
+
+    return $args;
+
+    $contacts = mr9_get_address( $args );
+    
     }
 
     /**
