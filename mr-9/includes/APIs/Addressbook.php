@@ -116,4 +116,12 @@ class Addressbook extends WP_REST_Controller {
 
         return $this->add_additional_fields_schema( $this->schema );
     }
+
+    public function get_collection_params(){
+        $params = parent::get_collection_params();
+
+        unset( $params['search'] );
+
+        return $params;
+    }
 }
