@@ -111,5 +111,9 @@ class Addressbook extends WP_REST_Controller {
                 ],
             ]
         ];
+
+        $this->schema = $schema;
+
+        return $this->add_additional_fields_schema( $this->schema );
     }
 }
