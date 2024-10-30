@@ -52,25 +52,30 @@ class Addressbook extends WP_REST_Controller {
      * */
 
     public function get_items( $request ){
-    $args = [];
-    $params = $this->get_collection_params();
+        $args = [];
+        $params = $this->get_collection_params();
 
-    foreach( $params as $key => $value ){
-        if( isset( $request[ $key ])){
-            $args[ $key ]   = $request[ $key ];
+        foreach( $params as $key => $value ){
+            if( isset( $request[ $key ])){
+                $args[ $key ]   = $request[ $key ];
+            }
         }
-    }
 
-    // change  `per_page` to `number`
-    $args['number'] = $args['per_page'];
-    $args['offset'] = $args['number'] * ( $args['page'] - 1 );
+        // change  `per_page` to `number`
+        $args['number'] = $args['per_page'];
+        $args['offset'] = $args['number'] * ( $args['page'] - 1 );
 
-    unset( $args['page']);
-    unset( $args['per_page']);
-    
-    return $args;
+        unset( $args['page']);
+        unset( $args['per_page']);
+        
+        $data   = [];
+        $contacts = mr9_get_address( $args );
 
-    $contacts = mr9_get_address( $args );
+        foreach( $contacts as $contact ){
+            $response = $this->prepare_item_for_response( $contact, $request );
+            $data[] = $this->prepare_response_for_collection( $response );
+        }
+        return $contacts;
 
     }
 
