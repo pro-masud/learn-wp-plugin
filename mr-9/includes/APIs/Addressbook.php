@@ -61,10 +61,17 @@ class Addressbook extends WP_REST_Controller {
         }
     }
 
+    // change  `per_page` to `number`
+    $args['number'] = $args['per_page'];
+    $args['offset'] = $args['number'] * ( $args['page'] - 1 );
+
+    unset( $args['page']);
+    unset( $args['per_page']);
+    
     return $args;
 
     $contacts = mr9_get_address( $args );
-    
+
     }
 
     /**
