@@ -19,7 +19,7 @@ class Addressbook extends WP_REST_Controller {
                     'permission_callback'   => [ $this, 'get_items_permissions_check' ],
                     'args'                  => $this->get_collection_params(),
                 ],
-                'schema'    => [ $this, 'get_itme_schema' ],
+                'schema'    => [ $this, 'get_item_schema' ],
             ],
         );
     }
@@ -51,32 +51,66 @@ class Addressbook extends WP_REST_Controller {
      * 
      * */
 
-    public function get_items( $request ){
+     public function get_items( $request ) {
         $args = [];
         $params = $this->get_collection_params();
-
-        foreach( $params as $key => $value ){
-            if( isset( $request[ $key ])){
-                $args[ $key ]   = $request[ $key ];
+    
+        foreach( $params as $key => $value ) {
+            if( isset( $request[ $key ] ) ) {
+                $args[ $key ] = $request[ $key ];
             }
         }
-
-        // change  `per_page` to `number`
+    
+        // change `per_page` to `number`
         $args['number'] = $args['per_page'];
         $args['offset'] = $args['number'] * ( $args['page'] - 1 );
-
-        unset( $args['page']);
-        unset( $args['per_page']);
-        
-        $data   = [];
+    
+        unset( $args['per_page'] );
+        unset( $args['page'] );
+    
+        $data = [];
         $contacts = mr9_get_address( $args );
-
-        foreach( $contacts as $contact ){
+    
+        foreach( $contacts as $contact ) {
             $response = $this->prepare_item_for_response( $contact, $request );
             $data[] = $this->prepare_response_for_collection( $response );
         }
-        return $contacts;
+    
+        // return $data instead of $response
+        return rest_ensure_response( $data );
+    }
 
+
+    public function prepare_item_for_response( $item, $request ) {
+        $data = [];
+        $fields = $this->get_fields_for_response( $request );
+        
+        // Debug: Check fields array
+        error_log(print_r($fields, true));
+    
+        if ( in_array( 'id', $fields, true ) ) {
+            $data['id'] = (int) $item->id;
+        }
+        if ( in_array( 'name', $fields, true ) ) {
+            $data['name'] = $item->name;
+        }
+        if ( in_array( 'address', $fields, true ) ) {
+            $data['address'] = $item->address;
+        }
+        if ( in_array( 'phone', $fields, true ) ) {
+            $data['phone'] = $item->phone;
+        }
+        if ( in_array( 'date', $fields, true ) ) {
+            $data['date'] = mysql_to_rfc3339( $item->created_at );
+        }
+        
+        // Check if data is populated
+        error_log(print_r($data, true));
+    
+        $context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+        $data = $this->filter_response_by_context( $data, $context );
+    
+        return rest_ensure_response( $data );
     }
 
     /**
@@ -84,7 +118,7 @@ class Addressbook extends WP_REST_Controller {
      * Retrieves the contact schema, conforming to JSON Schema.
      * 
      * */
-    public function get_itme_schema(){
+    public function get_item_schema(){
         if( $this->schema ){
             return $this->add_additional_fields_schema( $this->schema );
         }
