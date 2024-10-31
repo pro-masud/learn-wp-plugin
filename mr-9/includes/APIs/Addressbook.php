@@ -109,9 +109,37 @@ class Addressbook extends WP_REST_Controller {
     
         $context = ! empty( $request['context'] ) ? $request['context'] : 'view';
         $data = $this->filter_response_by_context( $data, $context );
-    
-        return rest_ensure_response( $data );
+        
+        $response =  rest_ensure_response( $data );
+        $response->add_links( $this->prepare_links( $item ) );
+       
+        return $response;
     }
+
+    /**
+     * 
+     * Prepares links for the request.
+     * 
+     * @param \WP_Post $post post object. 
+     * 
+     * @return array links for the given post.
+     * 
+     * */
+
+     protected function prepare_links( $item ){
+        $base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+
+        $links = [
+            'self'  => [
+                'href'  => rest_url( trailingslashit( $base ) . $item->id ),
+            ],
+            'collection'    => [
+                'href'  => rest_url( $base ),
+            ],
+        ];
+
+        return $links;
+     }
 
     /**
      * 
