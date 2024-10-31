@@ -75,9 +75,17 @@ class Addressbook extends WP_REST_Controller {
             $response = $this->prepare_item_for_response( $contact, $request );
             $data[] = $this->prepare_response_for_collection( $response );
         }
+
+        $total = mr9_address_count();
+        $max_pages = ceil( $total / (int) $args[ 'number' ] );
+        
+        $response = rest_ensure_response( $data );
+
+        $response->header( 'X-WP-Total', (int) $total );
+        $response->header( 'X-WP-TotalPages', (int) $max_pages );
     
         // return $data instead of $response
-        return rest_ensure_response( $data );
+        return $response;
     }
 
 
@@ -128,7 +136,7 @@ class Addressbook extends WP_REST_Controller {
 
      protected function prepare_links( $item ){
         $base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
-
+ 
         $links = [
             'self'  => [
                 'href'  => rest_url( trailingslashit( $base ) . $item->id ),
