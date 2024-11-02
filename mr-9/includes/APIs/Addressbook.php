@@ -109,6 +109,7 @@ class Addressbook extends WP_REST_Controller {
      * @param \WP_REST_Request $request
      * @return boolean
      */
+    
     public function create_item( $request ){
         $contact = $this->prepare_item_for_database( $request );
 
@@ -248,7 +249,6 @@ class Addressbook extends WP_REST_Controller {
         return $response;
     }
     
-
     protected function get_contact( $id ){
         $contact = mr9_single_address( $id );
 
@@ -269,6 +269,7 @@ class Addressbook extends WP_REST_Controller {
      * @param \WP_REST_Request $request
      * @return boolean|WP_Error
      */
+
     public function get_item_permissions_check( $request ){
         if ( ! current_user_can( 'manage_options' ) ) {
             return false;
@@ -298,7 +299,7 @@ class Addressbook extends WP_REST_Controller {
         return $response;
     }
     
-  public function prepare_item_for_response( $item, $request ) {
+    public function prepare_item_for_response( $item, $request ) {
         $data = [];
         $fields = $this->get_fields_for_response( $request );
 
