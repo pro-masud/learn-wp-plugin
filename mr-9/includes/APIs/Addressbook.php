@@ -85,7 +85,7 @@ class Addressbook extends WP_REST_Controller {
 
         $data = [
             'delete'    => true, 
-            'previous'  => $previous,
+            'previous'  => $previous->get_data(),
         ];
 
         $response = rest_ensure_response( $data );
@@ -127,22 +127,29 @@ class Addressbook extends WP_REST_Controller {
         unset( $args['page'] );
     
         $data = [];
-        $contacts = mr9_single_address( $args );
+        $contacts = mr9_get_address( $args ); // Make sure this function returns an array or object.
     
-        foreach( $contacts as $contact ) {
-            $response = $this->prepare_item_for_response( $contact, $request );
-            $data[] = $this->prepare_response_for_collection( $response );
+        // Check if $contacts is valid before iterating
+        if (!empty($contacts) && (is_array($contacts) || is_object($contacts))) {
+            foreach( $contacts as $contact ) {
+                $response = $this->prepare_item_for_response( $contact, $request );
+                $data[] = $this->prepare_response_for_collection( $response );
+            }
+        } else {
+            // Log if no contacts are found
+            error_log('No contacts returned from mr9_get_address: ' . print_r($contacts, true));
         }
-
+    
         $total = mr9_address_count();
         $max_pages = ceil( $total / (int) $args[ 'number' ] );
-        
+    
         $response = rest_ensure_response( $data );
         $response->header( 'X-WP-Total', (int) $total );
         $response->header( 'X-WP-TotalPages', (int) $max_pages );
     
         return $response;
     }
+    
 
     protected function get_contact( $id ){
         $contact = mr9_single_address( $id );
