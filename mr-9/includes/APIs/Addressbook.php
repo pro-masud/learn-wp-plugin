@@ -9,6 +9,7 @@ class Addressbook extends WP_REST_Controller {
         $this->namespace = 'academy/v1';
         $this->rest_base = 'contacts'; 
     }
+
     public function register_routes(){
         register_rest_route(
             $this->namespace,
@@ -21,51 +22,83 @@ class Addressbook extends WP_REST_Controller {
                     'args'                  => $this->get_collection_params(),
                 ],
                 'schema'    => [ $this, 'get_item_schema' ],
-            ],
+            ]
         );
 
         register_rest_route(
             $this->namespace,
-            '/' . '/(?P<id>[\d]+',
+            '/' . $this->rest_base . '/(?P<id>[\d]+)',
             [
-                [
-                    'args'  => [
-                        'id'    => [
-                            'description'   => __( 'Unique identifier for the object.', 'mr-9' ),
-                            'type'          => 'integer',
-                        ],
+                'args'   => [
+                    'id' => [
+                        'description' => __( 'Unique identifier for the object.' ),
+                        'type'        => 'integer',
                     ],
                 ],
                 [
-                    'methods'               => WP_REST_Server::READABLE,
-                    'callback'              => [ $this, 'get_item' ],
-                    'permission_callback'   => [ $this, 'get_item_permissions_check' ],
-                    'args'                  => $this->get_collection_params(),
+                    'methods'             => WP_REST_Server::READABLE,
+                    'callback'            => [ $this, 'get_item' ],
+                    'permission_callback' => [ $this, 'get_item_permissions_check' ],
+                    'args'                => [
+                        'context' => $this->get_context_param( [ 'default' => 'view' ] ),
+                    ],
                 ],
-                'schema'    => [ $this, 'get_item_schema' ],
-            ],
+            ]
         );
     }
 
     /**
-     * 
      * Checks if a given request has access to read contacts
      * 
      * @param \WP_REST_Request $request
-     * 
      * @return boolean
-     * 
-     * Description: this function working on user login or return to false option here
-     * */
+     */
     public function get_items_permissions_check( $request ){
-        if( current_user_can( 'manage_options' )){
-            return true;
+        return current_user_can( 'manage_options' );
+    }
+
+    /**
+     * Retrieves a list of address items.
+     * 
+     * @param \WP_REST_Request $request
+     * @return \WP_REST_Response|WP_Error
+     */
+    public function get_items( $request ) {
+        $args = [];
+        $params = $this->get_collection_params();
+    
+        foreach( $params as $key => $value ) {
+            if( isset( $request[ $key ] ) ) {
+                $args[ $key ] = $request[ $key ];
+            }
+        }
+    
+        $args['number'] = $args['per_page'];
+        $args['offset'] = $args['number'] * ( $args['page'] - 1 );
+    
+        unset( $args['per_page'] );
+        unset( $args['page'] );
+    
+        $data = [];
+        $contacts = mr9_single_address( $args );
+    
+        foreach( $contacts as $contact ) {
+            $response = $this->prepare_item_for_response( $contact, $request );
+            $data[] = $this->prepare_response_for_collection( $response );
         }
 
-        return false;
+        $total = mr9_address_count();
+        $max_pages = ceil( $total / (int) $args[ 'number' ] );
+        
+        $response = rest_ensure_response( $data );
+        $response->header( 'X-WP-Total', (int) $total );
+        $response->header( 'X-WP-TotalPages', (int) $max_pages );
+    
+        return $response;
     }
-     protected function get_contact( $id ){
-        $contact = mr9_get_address( $id );
+
+    protected function get_contact( $id ){
+        $contact = mr9_single_address( $id );
 
         if( ! $contact ){
             return new WP_Error(
@@ -78,25 +111,20 @@ class Addressbook extends WP_REST_Controller {
         return $contact;
     }
 
-
     /**
-     * 
-     * Checks if a given request has access to read contacts
+     * Checks if a given request has access to read a single contact
      * 
      * @param \WP_REST_Request $request
-     * 
-     * @return boolean
-     * 
-     * Description: this function working on user login or return to false option here
-     * */
+     * @return boolean|WP_Error
+     */
     public function get_item_permissions_check( $request ){
-        if( current_user_can( 'manage_options' )){
+        if ( ! current_user_can( 'manage_options' ) ) {
             return false;
         }
 
         $contact = $this->get_contact( $request['id'] );
 
-        if( is_wp_error( $contact )){
+        if ( is_wp_error( $contact ) ) {
             return $contact;
         }
 
@@ -104,117 +132,94 @@ class Addressbook extends WP_REST_Controller {
     }
 
     /**
-     * Recrleves a list of address items.
+     * Retrieves a single address item.
      * 
      * @param \WP_REST_Request $request
-     * 
-     * @return \WP_REST_Request/WP_Error
-     * 
-     * */
+     * @return \WP_REST_Response|WP_Error
+     */
+    public function get_item( $request ) {
+        $contact = $this->get_contact( $request['id'] );
 
-     public function get_items( $request ) {
-        $args = [];
-        $params = $this->get_collection_params();
-    
-        foreach( $params as $key => $value ) {
-            if( isset( $request[ $key ] ) ) {
-                $args[ $key ] = $request[ $key ];
-            }
-        }
-    
-        // change `per_page` to `number`
-        $args['number'] = $args['per_page'];
-        $args['offset'] = $args['number'] * ( $args['page'] - 1 );
-    
-        unset( $args['per_page'] );
-        unset( $args['page'] );
-    
-        $data = [];
-        $contacts = mr9_get_address( $args );
-    
-        foreach( $contacts as $contact ) {
-            $response = $this->prepare_item_for_response( $contact, $request );
-            $data[] = $this->prepare_response_for_collection( $response );
-        }
+        $response = $this->prepare_item_for_response( $contact, $request );
+        $response = rest_ensure_response( $response );
 
-        $total = mr9_address_count();
-        $max_pages = ceil( $total / (int) $args[ 'number' ] );
-        
-        $response = rest_ensure_response( $data );
-
-        $response->header( 'X-WP-Total', (int) $total );
-        $response->header( 'X-WP-TotalPages', (int) $max_pages );
-    
-        // return $data instead of $response
         return $response;
     }
-
-
-    public function prepare_item_for_response( $item, $request ) {
-        $data = [];
-        $fields = $this->get_fields_for_response( $request );
-        
-        // Debug: Check fields array
-        error_log(print_r($fields, true));
     
-        if ( in_array( 'id', $fields, true ) ) {
-            $data['id'] = (int) $item->id;
-        }
-        if ( in_array( 'name', $fields, true ) ) {
-            $data['name'] = $item->name;
-        }
-        if ( in_array( 'address', $fields, true ) ) {
-            $data['address'] = $item->address;
-        }
-        if ( in_array( 'phone', $fields, true ) ) {
-            $data['phone'] = $item->phone;
-        }
-        if ( in_array( 'date', $fields, true ) ) {
-            $data['date'] = mysql_to_rfc3339( $item->created_at );
-        }
-        
-        // Check if data is populated
-        error_log(print_r($data, true));
-    
-        $context = ! empty( $request['context'] ) ? $request['context'] : 'view';
-        $data = $this->filter_response_by_context( $data, $context );
-        
-        $response =  rest_ensure_response( $data );
-        $response->add_links( $this->prepare_links( $item ) );
-       
-        return $response;
+  public function prepare_item_for_response( $item, $request ) {
+    $data = [];
+    $fields = $this->get_fields_for_response( $request );
+
+    // Determine if the item is an object or an array and access properties accordingly
+    $id = is_object( $item ) ? $item->id ?? null : (isset($item['id']) ? $item['id'] : null);
+    $name = is_object( $item ) ? $item->name ?? null : (isset($item['name']) ? $item['name'] : null);
+    $address = is_object( $item ) ? $item->address ?? null : (isset($item['address']) ? $item['address'] : null);
+    $phone = is_object( $item ) ? $item->phone ?? null : (isset($item['phone']) ? $item['phone'] : null);
+    $date = is_object( $item ) ? $item->created_at ?? null : (isset($item['created_at']) ? $item['created_at'] : null);
+
+    // Set data only if the keys exist
+    if (in_array('id', $fields, true) && $id !== null) {
+        $data['id'] = (int) $id;
+    } else {
+        // Handle missing id case
+        $data['id'] = 0; // or choose not to include it at all
     }
 
-    /**
-     * 
+    if (in_array('name', $fields, true)) {
+        $data['name'] = $name ?? null;
+    }
+    if (in_array('address', $fields, true)) {
+        $data['address'] = $address ?? null;
+    }
+    if (in_array('phone', $fields, true)) {
+        $data['phone'] = $phone ?? null;
+    }
+    if (in_array('date', $fields, true) && $date !== null) {
+        $data['date'] = mysql_to_rfc3339($date);
+    }
+
+    $context = !empty($request['context']) ? $request['context'] : 'view';
+    $data = $this->filter_response_by_context($data, $context);
+
+    $response = rest_ensure_response($data);
+    $response->add_links($this->prepare_links($item));
+
+    return $response;
+}
+
+    
+    
+
+        /**
      * Prepares links for the request.
      * 
-     * @param \WP_Post $post post object. 
-     * 
-     * @return array links for the given post.
-     * 
-     * */
-
-     protected function prepare_links( $item ){
+     * @param object $item Contact object
+     * @return array Links for the given item
+     */
+    protected function prepare_links( $item ){
         $base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
- 
+    
+        // Check if item is an array or object for the ID
+        $id = is_array( $item ) ? $item['id'] : $item->id;
+    
         $links = [
             'self'  => [
-                'href'  => rest_url( trailingslashit( $base ) . $item->id ),
+                'href'  => rest_url( trailingslashit( $base ) . $id ),
             ],
             'collection'    => [
                 'href'  => rest_url( $base ),
             ],
         ];
-
+    
         return $links;
-     }
+    }
+    
 
     /**
-     * 
      * Retrieves the contact schema, conforming to JSON Schema.
      * 
-     * */
+     * @return array The contact schema
+     */
     public function get_item_schema(){
         if( $this->schema ){
             return $this->add_additional_fields_schema( $this->schema );
@@ -272,10 +277,26 @@ class Addressbook extends WP_REST_Controller {
         return $this->add_additional_fields_schema( $this->schema );
     }
 
+    /**
+     * Defines parameters for collection requests.
+     * 
+     * @return array Collection parameters
+     */
     public function get_collection_params(){
-        $params = parent::get_collection_params();
-
-        unset( $params['search'] );
+        $params = [
+            'page' => [
+                'description'       => __( 'Current page of the collection.' ),
+                'type'              => 'integer',
+                'default'           => 1,
+                'sanitize_callback' => 'absint',
+            ],
+            'per_page' => [
+                'description'       => __( 'Number of items per page.' ),
+                'type'              => 'integer',
+                'default'           => 10,
+                'sanitize_callback' => 'absint',
+            ],
+        ];
 
         return $params;
     }
