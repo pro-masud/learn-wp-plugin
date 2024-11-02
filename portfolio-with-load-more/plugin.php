@@ -134,6 +134,12 @@
                     </div>
                 </div>
             </div>
+
+            <div class="portfolio--footer mt-5">
+                <div class="load-more-btn">
+                    <a class="btn loadAjax btn-default"><?php esc_html_e( 'Load More', 'porfolio' ); ?></a>
+                </div>
+            </div>
             <?php
             return ob_get_clean();
         }
