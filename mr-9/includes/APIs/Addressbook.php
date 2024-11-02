@@ -9,7 +9,7 @@ class Addressbook extends WP_REST_Controller {
         $this->rest_base = 'contacts'; 
     }
     public function register_routes(){
-       register_rest_route(
+        register_rest_route(
             $this->namespace,
             '/' . $this->rest_base,
             [
@@ -17,6 +17,28 @@ class Addressbook extends WP_REST_Controller {
                     'methods'               => WP_REST_Server::READABLE,
                     'callback'              => [ $this, 'get_items' ],
                     'permission_callback'   => [ $this, 'get_items_permissions_check' ],
+                    'args'                  => $this->get_collection_params(),
+                ],
+                'schema'    => [ $this, 'get_item_schema' ],
+            ],
+        );
+
+        register_rest_route(
+            $this->namespace,
+            '/' . '/(?P<id>[\d]+',
+            [
+                [
+                    'args'  => [
+                        'id'    => [
+                            'description'   => __( 'Unique identifier for the object.', 'mr-9' ),
+                            'type'          => 'integer',
+                        ],
+                    ],
+                ],
+                [
+                    'methods'               => WP_REST_Server::READABLE,
+                    'callback'              => [ $this, 'get_item' ],
+                    'permission_callback'   => [ $this, 'get_item_permissions_check' ],
                     'args'                  => $this->get_collection_params(),
                 ],
                 'schema'    => [ $this, 'get_item_schema' ],
@@ -35,6 +57,25 @@ class Addressbook extends WP_REST_Controller {
      * Description: this function working on user login or return to false option here
      * */
     public function get_items_permissions_check( $request ){
+        if( current_user_can( 'manage_options' )){
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * 
+     * Checks if a given request has access to read contacts
+     * 
+     * @param \WP_REST_Request $request
+     * 
+     * @return boolean
+     * 
+     * Description: this function working on user login or return to false option here
+     * */
+    public function get_item_permissions_check( $request ){
         if( current_user_can( 'manage_options' )){
             return true;
         }
