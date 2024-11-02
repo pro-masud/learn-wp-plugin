@@ -21,6 +21,12 @@ class Addressbook extends WP_REST_Controller {
                     'permission_callback'   => [ $this, 'get_items_permissions_check' ],
                     'args'                  => $this->get_collection_params(),
                 ],
+                [
+                    'methods'               => WP_REST_Server::CREATABLE,
+                    'callback'              => [ $this, 'create_item' ],
+                    'permission_callback'   => [ $this, 'create_item_permissions_check' ],
+                    'args'                  => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+                ],
                 'schema'    => [ $this, 'get_item_schema' ],
             ]
         );
@@ -53,6 +59,26 @@ class Addressbook extends WP_REST_Controller {
         );
     }
 
+    /**
+     * Checks if a given request has access to read contacts
+     * 
+     * @param \WP_REST_Request $request
+     * @return boolean
+     */
+    public function create_item_permissions_check( $request ){
+
+    }
+
+    /**
+     * Checks if a given request has access to read contacts
+     * 
+     * @param \WP_REST_Request $request
+     * @return boolean
+     */
+    public function create_item( $id ){
+
+    }
+    
     /**
      * Checks if a given request has access to read contacts
      * 
