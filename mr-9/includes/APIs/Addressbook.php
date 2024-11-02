@@ -50,6 +50,14 @@ class Addressbook extends WP_REST_Controller {
                     ],
                 ],
                 [
+                    'methods'             => WP_REST_Server::EDITABLE,
+                    'callback'            => [ $this, 'update_item' ],
+                    'permission_callback' => [ $this, 'update_permissions_check' ],
+                    'args'                => [
+                        'context' => $this->get_context_param( [ 'default' => 'view' ] ),
+                    ],
+                ],
+                [
                     'methods'             => WP_REST_Server::DELETABLE,
                     'callback'            => [ $this, 'delete_item' ],
                     'permission_callback' => [ $this, 'delete_item_permissions_check' ],
@@ -57,6 +65,32 @@ class Addressbook extends WP_REST_Controller {
                 'schema'    => [ $this, 'get_item_schema' ],
             ]
         );
+    }
+
+    public function update_permissions_check( $request ){
+        return $this->get_item_permissions_check( $request );
+    }
+
+    public function update_item( $request ){
+        $contact = $this->get_contact( $request['id'] );
+        $prepare = $this->prepare_item_for_database( $request );
+
+        $prepare = array_merge( (array) $contact, $prepare );
+
+        $update_data = mr9_insert_address( $prepare );
+
+        if( ! $update_data ){
+            return new WP_Error(
+                'rest_not_updated',
+                __( ' Sorry, the address colud not be updated.' ),
+                [ 'status'  => 400 ]
+            );
+        }
+
+        $contact = $this->get_contact( $request['id'] );
+        $response = $this->prepare_item_for_response( $contact, $request );
+
+        return rest_ensure_response( $response );
     }
 
     /**
@@ -99,7 +133,6 @@ class Addressbook extends WP_REST_Controller {
 
         return rest_ensure_response( $response );
     }
-
 
     protected function prepare_item_for_database( $request ){
         $prepared  = [];
