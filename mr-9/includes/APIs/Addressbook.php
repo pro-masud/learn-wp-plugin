@@ -66,7 +66,7 @@ class Addressbook extends WP_REST_Controller {
      * @return boolean
      */
     public function create_item_permissions_check( $request ){
-
+        return $this->get_items_permissions_check( $request );
     }
 
     /**
@@ -75,10 +75,49 @@ class Addressbook extends WP_REST_Controller {
      * @param \WP_REST_Request $request
      * @return boolean
      */
-    public function create_item( $id ){
+    public function create_item( $request ){
+        $contact = $this->prepare_item_for_database( $request );
 
+        if( is_wp_error( $contact )){
+            return $contact;
+        }
+
+        $contact_id = mr9_insert_address( $contact );
+
+        if( is_wp_error( $contact_id )){
+            $contact_id->add_data( [ 'status' => 400 ]);
+
+            return $contact_id;
+        }
+ 
+        $contact =  $this->get_contact( $contact_id );
+
+        $response = $this->prepare_item_for_response( $contact, $request );
+
+        $response->set_status( 201 );
+        $response->header( 'Location', rest_url( sprintf( '%s%s%d', $this->namespace, $this->rest_base, $contact_id )));
+
+        return rest_ensure_response( $response );
     }
-    
+
+
+    protected function prepare_item_for_database( $request ){
+        $prepared  = [];
+
+        if( isset( $request['name'] ) ){
+            $prepared['name'] = $prepared['name'];
+        }
+
+        if( isset( $request['address'] ) ){
+            $prepared['address'] = $prepared['address'];
+        }
+
+        if( isset( $request['name'] ) ){
+            $prepared['name'] = $prepared['name'];
+        }
+        return $prepared;
+    }
+
     /**
      * Checks if a given request has access to read contacts
      * 
@@ -227,50 +266,47 @@ class Addressbook extends WP_REST_Controller {
     }
     
   public function prepare_item_for_response( $item, $request ) {
-    $data = [];
-    $fields = $this->get_fields_for_response( $request );
+        $data = [];
+        $fields = $this->get_fields_for_response( $request );
 
-    // Determine if the item is an object or an array and access properties accordingly
-    $id = is_object( $item ) ? $item->id ?? null : (isset($item['id']) ? $item['id'] : null);
-    $name = is_object( $item ) ? $item->name ?? null : (isset($item['name']) ? $item['name'] : null);
-    $address = is_object( $item ) ? $item->address ?? null : (isset($item['address']) ? $item['address'] : null);
-    $phone = is_object( $item ) ? $item->phone ?? null : (isset($item['phone']) ? $item['phone'] : null);
-    $date = is_object( $item ) ? $item->created_at ?? null : (isset($item['created_at']) ? $item['created_at'] : null);
+        // Determine if the item is an object or an array and access properties accordingly
+        $id = is_object( $item ) ? $item->id ?? null : (isset($item['id']) ? $item['id'] : null);
+        $name = is_object( $item ) ? $item->name ?? null : (isset($item['name']) ? $item['name'] : null);
+        $address = is_object( $item ) ? $item->address ?? null : (isset($item['address']) ? $item['address'] : null);
+        $phone = is_object( $item ) ? $item->phone ?? null : (isset($item['phone']) ? $item['phone'] : null);
+        $date = is_object( $item ) ? $item->created_at ?? null : (isset($item['created_at']) ? $item['created_at'] : null);
 
-    // Set data only if the keys exist
-    if (in_array('id', $fields, true) && $id !== null) {
-        $data['id'] = (int) $id;
-    } else {
-        // Handle missing id case
-        $data['id'] = 0; // or choose not to include it at all
+        // Set data only if the keys exist
+        if (in_array('id', $fields, true) && $id !== null) {
+            $data['id'] = (int) $id;
+        } else {
+            // Handle missing id case
+            $data['id'] = 0; // or choose not to include it at all
+        }
+
+        if (in_array('name', $fields, true)) {
+            $data['name'] = $name ?? null;
+        }
+        if (in_array('address', $fields, true)) {
+            $data['address'] = $address ?? null;
+        }
+        if (in_array('phone', $fields, true)) {
+            $data['phone'] = $phone ?? null;
+        }
+        if (in_array('date', $fields, true) && $date !== null) {
+            $data['date'] = mysql_to_rfc3339($date);
+        }
+
+        $context = !empty($request['context']) ? $request['context'] : 'view';
+        $data = $this->filter_response_by_context($data, $context);
+
+        $response = rest_ensure_response($data);
+        $response->add_links($this->prepare_links($item));
+
+        return $response;
     }
 
-    if (in_array('name', $fields, true)) {
-        $data['name'] = $name ?? null;
-    }
-    if (in_array('address', $fields, true)) {
-        $data['address'] = $address ?? null;
-    }
-    if (in_array('phone', $fields, true)) {
-        $data['phone'] = $phone ?? null;
-    }
-    if (in_array('date', $fields, true) && $date !== null) {
-        $data['date'] = mysql_to_rfc3339($date);
-    }
-
-    $context = !empty($request['context']) ? $request['context'] : 'view';
-    $data = $this->filter_response_by_context($data, $context);
-
-    $response = rest_ensure_response($data);
-    $response->add_links($this->prepare_links($item));
-
-    return $response;
-}
-
-    
-    
-
-        /**
+    /**
      * Prepares links for the request.
      * 
      * @param object $item Contact object
@@ -294,7 +330,6 @@ class Addressbook extends WP_REST_Controller {
         return $links;
     }
     
-
     /**
      * Retrieves the contact schema, conforming to JSON Schema.
      * 
