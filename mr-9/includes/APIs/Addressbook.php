@@ -105,15 +105,15 @@ class Addressbook extends WP_REST_Controller {
         $prepared  = [];
 
         if( isset( $request['name'] ) ){
-            $prepared['name'] = $prepared['name'];
+            $prepared['name'] = $request['name'];
         }
 
         if( isset( $request['address'] ) ){
-            $prepared['address'] = $prepared['address'];
+            $prepared['address'] = $request['address'];
         }
 
-        if( isset( $request['name'] ) ){
-            $prepared['name'] = $prepared['name'];
+        if( isset( $request['phone'] ) ){
+            $prepared['phone'] = $request['phone'];
         }
         return $prepared;
     }
