@@ -2,6 +2,7 @@
 namespace Promasud\MR_9\APIs;
 use WP_REST_Controller;
 use WP_REST_Server;
+use WP_Error;
 
 class Addressbook extends WP_REST_Controller {
     function __construct(){
@@ -63,6 +64,19 @@ class Addressbook extends WP_REST_Controller {
 
         return false;
     }
+     protected function get_contact( $id ){
+        $contact = mr9_get_address( $id );
+
+        if( ! $contact ){
+            return new WP_Error(
+                'rest_contact_invalid_id',
+                __( 'Invalid Contact ID.' ),
+                [ 'status'  => 404 ]
+            );
+        }
+
+        return $contact;
+    }
 
 
     /**
@@ -77,10 +91,16 @@ class Addressbook extends WP_REST_Controller {
      * */
     public function get_item_permissions_check( $request ){
         if( current_user_can( 'manage_options' )){
-            return true;
+            return false;
         }
 
-        return false;
+        $contact = $this->get_contact( $request['id'] );
+
+        if( is_wp_error( $contact )){
+            return $contact;
+        }
+
+        return true;
     }
 
     /**
