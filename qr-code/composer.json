@@ -1,0 +1,19 @@
+{
+    "name": "pro-mausd/qr-code",
+    "description": "basic plugin",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "pro-masud",
+            "email": "promasudbd@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "ProMausd\\QrCode\\": "includes/"
+        }
+    }
+}
