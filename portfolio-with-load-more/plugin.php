@@ -30,6 +30,51 @@
 
             // create a custom shortcode here
             add_shortcode('portfolio', array($this, 'portfolio_short_code'));
+
+            add_action('wp_ajax_loadmore',array($this,'load_ajax_data'));
+            add_action('wp_ajax_nopriv_loadmore',array($this,'load_ajax_data'));
+        }
+
+
+        public function load_ajax_data(){
+
+            $args = array(
+                'post_type' => 'portfolio',
+                'posts_per_page' => $_POST['postNumber'],
+                'paged' => $_POST['page'] + 1
+            );
+            $query = new WP_Query( $args );
+            
+            if( $query->have_posts() ):
+                while( $query->have_posts() ): $query->the_post();
+                $terms = get_the_terms( get_the_ID(), 'category' );
+                $cat = array();
+                $id = '';
+                if( $terms ){
+                    foreach( $terms as $term ){
+                        $cat[] = $term->name.' ';
+                        $slug = $term->slug;
+                        $id  .= ' '.$term->slug.'-'.$term->term_id;
+                    }
+                }
+         ?>
+            <div class="portfolio-item <?php echo  $slug; ?>">
+                <a href="<?php the_permalink();?>" class="portfolio-image popup-gallery" title="Bread">
+                    <img src="<?php the_post_thumbnail_url()?>" alt="">
+                    <div class="portfolio-hover-title">
+                        <div class="portfolio-content">
+                            <h4><?php the_title();?></h4>
+                            <div class="portfolio-category">
+                                <span><?php echo $slug;?></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <?php
+                endwhile;
+              endif;
+            
         }
 
         // portfolio shortcode here
@@ -55,7 +100,9 @@
                                         if(!empty($categorys) ){
                                             foreach( $categorys as $category): ?>
                                                 <li>
-                                                    <a href="#" data-filter=".<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
+                                                    <a href="#" data-filter=".<?php echo $category->slug; ?>">
+                                                        <?php echo $category->name; ?>
+                                                    </a>
                                                 </li>
                                             <?php endforeach;
                                         }
@@ -95,6 +142,7 @@
                                     $terms = get_the_terms( get_the_ID(), 'category' );
                                     $cat = array();
                                     $id = '';
+
                                     if( $terms ){
                                         foreach( $terms as $term ){
                                             $cat[] = $term->name.' ';
@@ -104,9 +152,8 @@
                                     }
                                     ?>
                                         <div class="portfolio-item <?php  
-                                            foreach($terms as $term){ 
-                                                echo esc_html($term -> slug);
-                                            } ?> ">
+                                                echo $slug;
+                                            ?> ">
                                             <a href="<?php the_permalink(); ?>" class="portfolio-image popup-gallery" title="Bread">
                                                 <?php the_post_thumbnail(); ?>
                                                 <div class="portfolio-hover-title">
@@ -122,11 +169,10 @@
                                             </a>
                                         </div>
                                     <?php
-                                        endwhile;
-                                    
-                                        wp_reset_postdata();
-                                        echo "<div class='dataload'></div>";
-                                    endif;
+                                            endwhile;
+                                            wp_reset_postdata();
+                                            echo "<div class='dataload'></div>";
+                                        endif;
                                     ?>
                                 </div>
                             </div>
@@ -137,9 +183,12 @@
 
             <div class="portfolio--footer mt-5">
                 <div class="load-more-btn">
-                    <a class="btn loadAjax btn-default"><?php esc_html_e( 'Load More', 'porfolio' ); ?></a>
+                    <a class="btn loadAjax btn-default">
+                        <?php esc_html_e( 'Load More', 'porfolio' ); ?>
+                    </a>
                 </div>
             </div>
+            
             <?php
             return ob_get_clean();
         }

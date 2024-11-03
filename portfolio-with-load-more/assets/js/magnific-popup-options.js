@@ -1,54 +1,64 @@
 ;(function ($) {
+    "use strict";
 
-    "use strict"; // use strict to start
+    // Check if jQuery is loaded
+    if (typeof jQuery === 'undefined') {
+        console.error("jQuery is not loaded. Please make sure it is included before this script.");
+        return;
+    }
 
-$(document).ready(function() {
-  // MagnificPopup
-	var magnifPopup = function() {
-		$('.image-popup').magnificPopup({
-			type: 'image',
-			removalDelay: 300,
-			mainClass: 'mfp-with-zoom',
-			gallery:{
-				enabled:true
-			},
-			zoom: {
-				enabled: true, // By default it's false, so don't forget to enable it
+    $(document).ready(function() {
 
-				duration: 300, // duration of the effect, in milliseconds
-				easing: 'ease-in-out', // CSS transition easing function
+        // Check if Magnific Popup is loaded
+        if (typeof $.fn.magnificPopup === 'undefined') {
+            console.error("Magnific Popup library is not loaded. Please include it before this script.");
+            return;
+        }
 
-				// The "opener" function should return the element from which popup will be zoomed in
-				// and to which popup will be scaled down
-				// By defailt it looks for an image tag:
-				opener: function(openerElement) {
-				// openerElement is the element on which popup was initialized, in this case its <a> tag
-				// you don't need to add "opener" option if this code matches your needs, it's defailt one.
-				return openerElement.is('img') ? openerElement : openerElement.find('img');
-				}
-			}
-		});
-	};
+        // Image Popup Configuration
+        const initImagePopup = () => {
+            if ($('.image-popup').length) {
+                $('.image-popup').magnificPopup({
+                    type: 'image',
+                    removalDelay: 300,
+                    mainClass: 'mfp-with-zoom',
+                    gallery: {
+                        enabled: true
+                    },
+                    zoom: {
+                        enabled: true,
+                        duration: 300,
+                        easing: 'ease-in-out',
+                        opener: function(openerElement) {
+                            return openerElement.is('img') ? openerElement : openerElement.find('img');
+                        }
+                    }
+                });
+            } else {
+                console.warn("No .image-popup elements found.");
+            }
+        };
 
-	var magnifVideo = function() {
-		$('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-        disableOn: 700,
-        type: 'iframe',
-        mainClass: 'mfp-fade',
-        removalDelay: 160,
-        preloader: false,
+        // Video Popup Configuration
+        const initVideoPopup = () => {
+            if ($('.popup-youtube, .popup-vimeo, .popup-gmaps').length) {
+                $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+                    disableOn: 700,
+                    type: 'iframe',
+                    mainClass: 'mfp-fade',
+                    removalDelay: 160,
+                    preloader: false,
+                    fixedContentPos: false
+                });
+            } else {
+                console.warn("No video popup elements found (.popup-youtube, .popup-vimeo, .popup-gmaps).");
+            }
+        };
 
-        fixedContentPos: false
+        // Initialize both image and video popups
+        initImagePopup();
+        initVideoPopup();
+
     });
-	};
-
-	
-
-
-	// Call the functions 
-	magnifPopup();
-	magnifVideo();
-
-});
 
 })(jQuery);
