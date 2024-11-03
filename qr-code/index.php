@@ -13,6 +13,8 @@
     exit; // Exit if accessed directly.
 }
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 final class QR_Code {
     /**
      * Plugin Version
@@ -27,6 +29,13 @@ final class QR_Code {
     function __construct() {
         $this->define_constants();
         
+        add_action('plugins_loaded', [ $this, 'qr_code_init_plugin' ]);
+        
+    }
+
+    public function qr_code_init_plugin(){
+        new ProMausd\Qr_Code\QrCode();
+
     }
 
     /**

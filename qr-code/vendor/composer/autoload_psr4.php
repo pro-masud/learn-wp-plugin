@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ProMausd\\QrCode\\' => array($baseDir . '/src'),
+    'ProMausd\\Qr_Code\\' => array($baseDir . '/includes'),
 );

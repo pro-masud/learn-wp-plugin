@@ -9,14 +9,14 @@ class ComposerStaticInit1acc64cffeead22ba9b42fab8fa2e0ff
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
-            'ProMausd\\QrCode\\' => 16,
+            'ProMausd\\Qr_Code\\' => 17,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'ProMausd\\QrCode\\' => 
+        'ProMausd\\Qr_Code\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/includes',
         ),
     );
 
