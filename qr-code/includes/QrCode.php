@@ -13,7 +13,7 @@ class QrCode {
         $post_title = get_the_title();
         $post_permalink = urldecode( get_the_permalink( $post_id ) );
 
-        $src = sprintf( "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=%s", $post_permalink );
+       
 
         $post_type = get_post_type( $post_id );
 
@@ -22,8 +22,13 @@ class QrCode {
         if(!in_array( $post_type, $post_type_filter)){
             return $content;
         }
+        
+        $dimension  = apply_filters( 'qr_code_image_dimension', '150x150' );
+        $attr  = apply_filters( 'qr_code_image_attr', '' );
 
-        $content .= sprintf( "<img src='%s' alt='%s'>", $src, $post_title );
+        $src = sprintf( "https://api.qrserver.com/v1/create-qr-code/?size=%s&data=%s",  $dimension, $post_permalink );
+
+        $content .= sprintf( "<img %s src='%s' alt='%s'>", $attr, $src, $post_title );
 
         return $content;
     }
