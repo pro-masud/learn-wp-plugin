@@ -9,14 +9,14 @@ class ComposerStaticInit0932d84321ee65187d4c1a9f4238954a
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
-            'Pc\\WpDarkMode\\' => 14,
+            'Promasud\\WpDarkMode\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Pc\\WpDarkMode\\' => 
+        'Promasud\\WpDarkMode\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/includes',
         ),
     );
 

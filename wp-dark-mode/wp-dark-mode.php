@@ -13,6 +13,8 @@
         exit; // Exit if accessed directly.
     }
 
+    require_once __DIR__ . '/vendor/autoload.php';
+
     final class WP_Dark_Mode {
         /**
          * Plugin Version
@@ -33,7 +35,7 @@
 
         public function wp_dark_mode_init_plugin(){
            
-
+            new Promasud\WpDarkMode\Admin();
         }
 
         /**

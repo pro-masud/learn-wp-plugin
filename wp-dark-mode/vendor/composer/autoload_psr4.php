@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Pc\\WpDarkMode\\' => array($baseDir . '/src'),
+    'Promasud\\WpDarkMode\\' => array($baseDir . '/includes'),
 );
