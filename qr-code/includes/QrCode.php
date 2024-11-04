@@ -40,18 +40,28 @@ class QrCode {
     }
 
     public function qr_code_settings_options() {
+
+        add_settings_section(
+        'qr_setting_section',
+        'Qr Code Settings Fields',
+        [ $this, 'qr_code_setting_section_callback_function'],
+        'general'
+        );
+
         add_settings_field(
             'qr_code_setting_width_id',
             __( 'Qr Code Width', 'qr-code' ),
             array( $this, 'qr_width_settings_callback' ), // Use array callback with $this
-            'general'
+            'general',
+            'qr_setting_section'
         );
     
         add_settings_field(
             'qr_code_setting_height_id',
             __( 'Qr Code Height', 'qr-code' ),
             array( $this, 'qr_height_settings_callback' ), // Use array callback with $this
-            'general'
+            'general',
+            'qr_setting_section'
         );
     
         register_setting( 'general', 'qr_code_setting_width_id', array( 
@@ -63,7 +73,9 @@ class QrCode {
         ) );
     }
     
-
+    public function qr_code_setting_section_callback_function(){
+        echo "<p>" . esc_html('Qr Code Options') . "</p>";
+    }
     public function qr_width_settings_callback( $args ){
         $width = get_option( 'qr_code_setting_width_id' );
     
