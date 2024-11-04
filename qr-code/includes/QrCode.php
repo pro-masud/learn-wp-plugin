@@ -24,7 +24,12 @@ class QrCode {
             return $content;
         }
 
-        $dimension  = apply_filters( 'qr_code_image_dimension', '150x150' );
+        $width = get_option( 'qr_code_setting_width_id' );
+        $width = $width ? $width : '150';
+        $height = get_option( 'qr_code_setting_height_id' );
+        $height = $height ? $height : '150';
+
+        $dimension  = apply_filters( 'qr_code_image_dimension', "{$width}x{$height}" );
         $attr  = apply_filters( 'qr_code_image_attr', '' );
 
         $src = sprintf( "https://api.qrserver.com/v1/create-qr-code/?size=%s&data=%s",  $dimension, $post_permalink );
