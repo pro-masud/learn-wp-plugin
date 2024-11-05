@@ -29,28 +29,16 @@ final class WP_Dark_Mode {
     function __construct() {
         $this->define_constants();
 
-        load_plugin_textdomain( '', false, dirname( WP_Dark_Mode_FILE ) . '/language' );
+        load_plugin_textdomain( '', false, dirname( WP_DARK_MODE_FILE ) . '/language' );
         
         add_action('plugins_loaded', [ $this, 'wp_dark_mode_init_plugin' ]);
-
-        $this->dark_mode_plugin_enqueue_files();
         
     }
 
     public function wp_dark_mode_init_plugin(){
         
-        new Promasud\WpDarkMode\Admin();
         new Promasud\WpDarkMode\Assets();
-    }
-
-
-    /**
-     * Initializes the main plugin
-     */ 
-
-    public function dark_mode_plugin_enqueue_files(){
-        wp_enqueue_style( 'dark-mode-style' );
-        wp_enqueue_script( 'dark-mode' );
+        new Promasud\WpDarkMode\Admin();
     }
 
     /**
@@ -72,11 +60,11 @@ final class WP_Dark_Mode {
      * Defines constants used in the plugin
      */ 
     public function define_constants() {
-        define('WP_Dark_Mode_VERSION', self::version);
-        define('WP_Dark_Mode_FILE', __FILE__);
-        define('WP_Dark_Mode_PATH', __DIR__);
-        define('WP_Dark_Mode_URL', plugins_url('', WP_Dark_Mode_FILE));
-        define('WP_Dark_Mode_ASSETS', WP_Dark_Mode_URL . '/assets');
+        define('WP_DARK_MODE_VERSION', self::version);
+        define('WP_DARK_MODE_FILE', __FILE__);
+        define('WP_DARK_MODE_PATH', __DIR__);
+        define('WP_DARK_MODE_URL', plugins_url('', WP_DARK_MODE_FILE));
+        define('WP_DARK_MODEe_ASSETS', WP_DARK_MODE_URL . '/assets');
     }
 }
 

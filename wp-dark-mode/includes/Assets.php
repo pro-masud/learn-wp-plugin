@@ -6,6 +6,8 @@ class Assets{
     function __construct(){
         add_action( 'wp_enqueue_scripts', [ $this, 'dark_mode_enqueue_assets_file' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'dark_mode_enqueue_assets_file' ] );
+
+        add_action( 'wp_enqueue_scripts', [ $this, 'dark_mode_plugin_enqueue_files'] );
     }
 
      /**
@@ -15,9 +17,9 @@ class Assets{
      * */ 
     public function wp_dark_mode_js_assets_file(){
         return [
-            'dark-mode' => [
-                'src'       => WP_Dark_Mode_ASSETS . '/js/darkmode-js.min.js',
-                'version'   => filemtime( WP_Dark_Mode_ASSETS . '/assets/js/darkmode-js.min.js' ),
+            'wp-dark-mode' => [
+                'src'       => WP_DARK_MODEe_ASSETS . '/js/darkmode-js.min.js',
+                'version'   => filemtime( WP_DARK_MODE_PATH . '/assets/js/darkmode-js.min.js' ),
                 'deps'       => [ 'jquery' ]
             ]
         ];
@@ -32,8 +34,8 @@ class Assets{
     public function wp_dark_mode_style_assets_file(){
         return [
             'dark-mode-style' => [
-                'src'       => WP_Dark_Mode_ASSETS . '/css/blockout.css',
-                'version'   => filemtime( WP_Dark_Mode_ASSETS . '/assets/css/blockout.css' ),
+                'src'       => WP_DARK_MODEe_ASSETS . '/css/blockout.css',
+                'version'   => filemtime( WP_DARK_MODE_PATH . '/assets/css/blockout.css' ),
             ],
         ];
     }
@@ -59,5 +61,15 @@ class Assets{
 
             wp_register_script( $handle, $script['src'], $deps, $script['version'], true );
         }
+    }
+
+
+        /**
+     * Initializes the main plugin
+     */ 
+
+     public function dark_mode_plugin_enqueue_files(){
+        wp_enqueue_script( 'dark-mode-style' );
+        wp_enqueue_style( 'wp-dark-mode' );
     }
 }
