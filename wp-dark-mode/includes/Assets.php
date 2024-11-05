@@ -10,7 +10,7 @@ class Assets{
         add_action( 'wp_enqueue_scripts', [ $this, 'dark_mode_plugin_enqueue_files'] );
     }
 
-     /**
+    /**
      * 
      * Dark Mode Plugin Include JS files
      * 
@@ -25,8 +25,7 @@ class Assets{
         ];
     }
 
-
-        /**
+    /**
      * 
      * Dark Mode Plugin Include CSS files
      * 
@@ -64,7 +63,7 @@ class Assets{
     }
 
 
-        /**
+    /**
      * Initializes the main plugin
      */ 
 
