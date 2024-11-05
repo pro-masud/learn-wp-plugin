@@ -32,12 +32,25 @@ final class WP_Dark_Mode {
         load_plugin_textdomain( '', false, dirname( WP_Dark_Mode_FILE ) . '/language' );
         
         add_action('plugins_loaded', [ $this, 'wp_dark_mode_init_plugin' ]);
+
+        $this->dark_mode_plugin_enqueue_files();
         
     }
 
     public function wp_dark_mode_init_plugin(){
         
         new Promasud\WpDarkMode\Admin();
+        new Promasud\WpDarkMode\Assets();
+    }
+
+
+    /**
+     * Initializes the main plugin
+     */ 
+
+    public function dark_mode_plugin_enqueue_files(){
+        wp_enqueue_style( 'dark-mode-style' );
+        wp_enqueue_script( 'dark-mode' );
     }
 
     /**
