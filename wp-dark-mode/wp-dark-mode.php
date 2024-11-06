@@ -30,22 +30,14 @@ final class WP_Dark_Mode {
         $this->define_constants();
         
         add_action('plugins_loaded', [ $this, 'wp_dark_mode_init_plugin' ]);        
-        add_action('plugins_loaded', [ $this, 'wp_dark_mode_textdomain_loaded' ]);        
+        
+        load_plugin_textdomain( 'wp-dark-mode', false, dirname( WP_DARK_MODE_FILE ) . '/language' );
     }
 
     public function wp_dark_mode_init_plugin(){
         
         new Promasud\WpDarkMode\Assets();
         new Promasud\WpDarkMode\Admin();
-    }
-
-    /**
-     * Plugin Text Domain Fuction Creation
-     * 
-     * @return \WP_Dark_Mode;
-     */
-    public function wp_dark_mode_textdomain_loaded(){
-        load_plugin_textdomain( 'wp-dark-mode', false, dirname( WP_DARK_MODE_FILE ) . '/language' );
     }
 
     /**

@@ -8,10 +8,10 @@ class Menus {
 
     public function wp_dark_mode_admin_page(){
         add_options_page( 
-            __( 'My Options', 'textdomain' ),
-            __( 'My Plugin', 'textdomain' ),
+            __( 'WP Dark Mode', 'wp-dark-mode' ),
+            __( 'WP Dark Mode', 'wp-dark-mode' ),
             'manage_options',
-            'my-plugin.php',
+            'wp-dark-mode',
             [ $this, 'wp_dark_mode_admin_front_end' ],
         );
     }
