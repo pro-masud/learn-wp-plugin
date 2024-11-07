@@ -88,11 +88,38 @@ class Menus {
             'wp-dark-mode-admin-section-page',
             'wp_dark_mode_main_section',
         );
+
+        add_settings_section(
+            'wp_dark_mode_default_postion_section',
+            'Pre-Defined Positions',
+            [ $this, 'wp_dark_mode_print_default_postion_info' ],
+            'wp-dark-mode-admin-section-page',
+        );
+
+        add_settings_field(
+            'wp_dark_mode_bottom_left',
+            __( 'Bottom Left', 'wp-dark-mode' ),
+            [ $this, 'wp_dark_mode_bottom_left_callback' ],
+            'wp-dark-mode-admin-section-page',
+            'wp_dark_mode_default_postion_section',
+        );
+
+        add_settings_field(
+            'wp_dark_mode_bottom_right',
+            __( 'Bottom Right', 'wp-dark-mode' ),
+            [ $this, 'wp_dark_mode_bottom_right_callback' ],
+            'wp-dark-mode-admin-section-page',
+            'wp_dark_mode_default_postion_section',
+        );
     }
 
     public function wp_dark_mode_print_main_section_info(){
-        echo "hello world";
+        echo esc_html( text: "WP Dark Mode Settings Options" );
     }
+    public function wp_dark_mode_print_default_postion_info(){
+        echo esc_html( "Choose the position that you prefer:" );
+    }
+    
 
     public function wp_dark_mode_bottom_callback(){
         printf(
@@ -125,5 +152,17 @@ class Menus {
             '<input type="text" id="wp_dark_mode_time_section" placeholder="0.3s" name="wp_dark_mode_options[wp_dark_mode_time_section]" value="%s" />',
             isset( $this->options[ 'wp_dark_mode_time_section' ] ) ? esc_attr( $this->options[ 'wp_dark_mode_time_section' ] ) : ''
         );
+    }
+    public function wp_dark_mode_bottom_left_callback(){
+        printf(
+            '<input type="checkbox" id="wp_dark_mode_bottom_left" name="wp_dark_mode_options[wp_dark_mode_bottom_left]" value="1" %s />',
+            checked( 1, isset($this->options['wp_dark_mode_bottom_left']) ? $this->options['wp_dark_mode_bottom_left'] : 0, false )
+        );  
+    }
+    public function wp_dark_mode_bottom_right_callback(){
+        printf(
+            '<input type="checkbox" id="wp_dark_mode_bottom_right" name="wp_dark_mode_options[wp_dark_mode_bottom_right]" value="1" %s />',
+            checked( 1, isset($this->options['wp_dark_mode_bottom_right']) ? $this->options['wp_dark_mode_bottom_right'] : 0, false )
+        );  
     }
 }
