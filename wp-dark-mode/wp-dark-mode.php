@@ -63,7 +63,7 @@ final class WP_Dark_Mode {
         define('WP_DARK_MODE_FILE', __FILE__);
         define('WP_DARK_MODE_PATH', __DIR__);
         define('WP_DARK_MODE_URL', plugins_url('', WP_DARK_MODE_FILE));
-        define('WP_DARK_MODEe_ASSETS', WP_DARK_MODE_URL . '/assets');
+        define('WP_DARK_MODE_ASSETS', WP_DARK_MODE_URL . '/assets');
     }
 }
 
