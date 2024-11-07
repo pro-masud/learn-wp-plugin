@@ -111,6 +111,29 @@ class Menus {
             'wp-dark-mode-admin-section-page',
             'wp_dark_mode_default_postion_section',
         );
+
+        add_settings_section(
+            'wp_dark_mode_widget_settings_section',
+            'Widget Settings',
+            [ $this, 'wp_dark_mode_print_widget_settings_section_info' ],
+            'wp-dark-mode-admin-section-page',
+        );
+
+        add_settings_field(
+            'wp_dark_mode_button_dark_settings',
+            __( 'Button Dark', 'wp-dark-mode' ),
+            [ $this, 'wp_dark_mode_button_dark_setting_callback' ],
+            'wp-dark-mode-admin-section-page',
+            'wp_dark_mode_widget_settings_section',
+        );
+
+        add_settings_field(
+            'wp_dark_mode_button_light_settings',
+            __( 'Button Light', 'wp-dark-mode' ),
+            [ $this, 'wp_dark_mode_button_light_setting_callback' ],
+            'wp-dark-mode-admin-section-page',
+            'wp_dark_mode_widget_settings_section',
+        );
     }
 
     public function wp_dark_mode_print_main_section_info(){
@@ -118,6 +141,10 @@ class Menus {
     }
     public function wp_dark_mode_print_default_postion_info(){
         echo esc_html( "Choose the position that you prefer:" );
+    }
+
+    public function wp_dark_mode_print_widget_settings_section_info(){
+        echo esc_html( "Enter Your Setting Options:" );
     }
     
 
@@ -159,10 +186,25 @@ class Menus {
             checked( 1, isset($this->options['wp_dark_mode_bottom_left']) ? $this->options['wp_dark_mode_bottom_left'] : 0, false )
         );  
     }
+
     public function wp_dark_mode_bottom_right_callback(){
         printf(
             '<input type="checkbox" id="wp_dark_mode_bottom_right" name="wp_dark_mode_options[wp_dark_mode_bottom_right]" value="1" %s />',
             checked( 1, isset($this->options['wp_dark_mode_bottom_right']) ? $this->options['wp_dark_mode_bottom_right'] : 0, false )
         );  
+    }
+
+    public function wp_dark_mode_button_dark_setting_callback(){
+        printf(
+            '<input type="color" id="wp_dark_mode_button_dark_settings" placeholder="0.3s" name="wp_dark_mode_options[wp_dark_mode_button_dark_settings]" value="%s" />',
+            isset( $this->options[ 'wp_dark_mode_button_dark_settings' ] ) ? esc_attr( $this->options[ 'wp_dark_mode_button_dark_settings' ] ) : ''
+        );
+    }
+
+    public function wp_dark_mode_button_light_setting_callback(){
+        printf(
+            '<input type="color" id="wp_dark_mode_button_dark_settings" placeholder="0.3s" name="wp_dark_mode_options[wp_dark_mode_button_light_settings]" value="%s" />',
+            isset( $this->options[ 'wp_dark_mode_button_light_settings' ] ) ? esc_attr( $this->options[ 'wp_dark_mode_button_light_settings' ] ) : ''
+        );
     }
 }
