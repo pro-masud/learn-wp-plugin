@@ -80,6 +80,14 @@ class Menus {
             'wp-dark-mode-admin-section-page',
             'wp_dark_mode_main_section',
         );
+
+        add_settings_field(
+            'wp_dark_mode_time_section',
+            __( 'Time', 'wp-dark-mode' ),
+            [ $this, 'wp_dark_mode_print_time_section' ],
+            'wp-dark-mode-admin-section-page',
+            'wp_dark_mode_main_section',
+        );
     }
 
     public function wp_dark_mode_print_main_section_info(){
@@ -108,8 +116,14 @@ class Menus {
     }
     public function wp_dark_mode_print_sipo_section(){
         printf(
-    '<input type="checkbox" id="wp_dark_mode_sipo_section" name="wp_dark_mode_options[wp_dark_mode_sipo_section]" value="1" %s />',
-    checked( 1, isset($this->options['wp_dark_mode_sipo_section']) ? $this->options['wp_dark_mode_sipo_section'] : 0, false )
+            '<input type="checkbox" id="wp_dark_mode_sipo_section" name="wp_dark_mode_options[wp_dark_mode_sipo_section]" value="1" %s />',
+            checked( 1, isset($this->options['wp_dark_mode_sipo_section']) ? $this->options['wp_dark_mode_sipo_section'] : 0, false )
         );  
+    }
+    public function wp_dark_mode_print_time_section(){
+        printf(
+            '<input type="text" id="wp_dark_mode_time_section" placeholder="0.3s" name="wp_dark_mode_options[wp_dark_mode_time_section]" value="%s" />',
+            isset( $this->options[ 'wp_dark_mode_time_section' ] ) ? esc_attr( $this->options[ 'wp_dark_mode_time_section' ] ) : ''
+        );
     }
 }
