@@ -63,12 +63,20 @@ class Menus {
             [ $this, 'wp_dark_mode_left_callback' ],
             'wp-dark-mode-admin-section-page',
             'wp_dark_mode_main_section',
-        );
+        ); 
 
         add_settings_field(
             'wp_dark_mode_right',
             __( 'Right Position', 'wp-dark-mode' ),
             [ $this, 'wp_dark_mode_right_callback' ],
+            'wp-dark-mode-admin-section-page',
+            'wp_dark_mode_main_section',
+        );
+
+        add_settings_field(
+            'wp_dark_mode_sipo_section',
+            __( 'Show in Posts only', 'wp-dark-mode' ),
+            [ $this, 'wp_dark_mode_print_sipo_section' ],
             'wp-dark-mode-admin-section-page',
             'wp_dark_mode_main_section',
         );
@@ -97,5 +105,11 @@ class Menus {
             '<input type="text" id="wp_dark_mode_right" placeholder="32px" name="wp_dark_mode_options[wp_dark_mode_right]" value="%s" />',
             isset( $this->options[ 'wp_dark_mode_right' ] ) ? esc_attr( $this->options[ 'wp_dark_mode_right' ] ) : ''
         );
+    }
+    public function wp_dark_mode_print_sipo_section(){
+        printf(
+    '<input type="checkbox" id="wp_dark_mode_sipo_section" name="wp_dark_mode_options[wp_dark_mode_sipo_section]" value="1" %s />',
+    checked( 1, isset($this->options['wp_dark_mode_sipo_section']) ? $this->options['wp_dark_mode_sipo_section'] : 0, false )
+        );  
     }
 }
