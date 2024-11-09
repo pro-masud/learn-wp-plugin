@@ -183,6 +183,15 @@ class Menus {
         );
     }
 
+    // Sanitization callback
+    public function sanitize($input) {
+        $sanitized_input = [];
+        foreach ($input as $key => $value) {
+            $sanitized_input[$key] = sanitize_text_field($value);
+        }
+        return $sanitized_input;
+    }
+
     public function wp_dark_mode_print_main_section_info(){
         echo esc_html( text: "WP Dark Mode Settings Options" );
     }
