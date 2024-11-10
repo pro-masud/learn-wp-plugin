@@ -94,5 +94,5 @@ function wp_dark_mode_init_assets( $args ){
 if( is_admin()){
     WP_Dark_Mode();
 }else{
-    add_action('wp_init', 'wp_dark_mode_init_assets' );
+    add_action('wp', 'wp_dark_mode_init_assets' );
 }
