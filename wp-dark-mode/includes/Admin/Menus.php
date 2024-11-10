@@ -185,12 +185,27 @@ class Menus {
 
     // Sanitization callback
     public function sanitize($input) {
+        $absint_keys = [
+            'wp_dark_mode_sipo_section',
+            'wp_dark_mode_bottom_left',
+            'wp_dark_mode_bottom_right',
+            'wp_dark_mode_wtcc_section',
+            'wp_dark_mode_wtmosm_section',
+            'wp_dark_mode_wyotwb_section',
+        ];
+    
         $sanitized_input = [];
         foreach ($input as $key => $value) {
-            $sanitized_input[$key] = sanitize_text_field($value);
+            if (in_array($key, $absint_keys, true)) {
+                $sanitized_input[$key] = absint($value);
+            } else {
+                $sanitized_input[$key] = sanitize_text_field($value);
+            }
         }
+    
         return $sanitized_input;
     }
+    
 
     public function wp_dark_mode_print_main_section_info(){
         echo esc_html( text: "WP Dark Mode Settings Options" );
@@ -299,7 +314,7 @@ class Menus {
         );  
     }
 
-    public function wp_dark_mode_wyotwb_settings_callback(){
+    public function wp_dark_mode_wyotwb_settings_callback(){     
         printf(
             '<input type="checkbox" id="wp_dark_mode_wyotwb_section" name="wp_dark_mode_options[wp_dark_mode_wyotwb_section]" value="1" %s />',
             checked( 1, isset($this->options['wp_dark_mode_wyotwb_section']) ? $this->options['wp_dark_mode_wyotwb_section'] : 0, false )

@@ -19,7 +19,7 @@ class Assets{
      * */ 
     public function wp_dark_mode_js_assets_file(){
         return [
-            'wp-dark-mode' => [
+            'wp-dark-mode-css' => [
                 'src'       => WP_DARK_MODE_ASSETS . '/js/darkmode-js.min.js',
                 'version'   => filemtime( WP_DARK_MODE_PATH . '/assets/js/darkmode-js.min.js' ),
                 'deps'       => [ 'jquery' ]
@@ -34,7 +34,7 @@ class Assets{
      * */ 
     public function wp_dark_mode_style_assets_file(){
         return [
-            'wp-dark-mode' => [
+            'wp-dark-mode-js' => [
                 'src'       => WP_DARK_MODE_ASSETS . '/css/blockout.css',
                 'version'   => filemtime( WP_DARK_MODE_PATH . '/assets/css/blockout.css' ),
             ],
@@ -65,12 +65,27 @@ class Assets{
     }
 
 
-    /**
-     * Initializes the main plugin
-     */ 
+    // /**
+    //  * Initializes the main plugin
+    //  */ 
 
-    public function wp_dark_mode_assets_file(){
+    // public function wp_dark_mode_assets_file(){
+    //     wp_enqueue_script( 'wp-dark-mode' );
+    //     wp_enqueue_style( 'wp-dark-mode' );
+    // }
+
+
+    public function wp_dark_mode_init(){
+        $wp_dark_mode_option = get_option('wp_dark_mode_options');
+
+       echo $wp_dark_mode_option['wp_dark_mode_sipo_section'];
+
+        add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_enqueue' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_postion' ] );
+
         wp_enqueue_script( 'wp-dark-mode' );
         wp_enqueue_style( 'wp-dark-mode' );
+
+        return false;
     }
 }

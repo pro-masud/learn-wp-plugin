@@ -36,8 +36,10 @@ final class WP_Dark_Mode {
 
     public function wp_dark_mode_init_plugin(){
         
-        new Promasud\WpDarkMode\Assets();
+      $plugin_assets =   new Promasud\WpDarkMode\Assets();
         new Promasud\WpDarkMode\Admin();
+
+        wp_dark_mode_init_assets( $plugin_assets->wp_dark_mode_init() );
     }
 
     /**
@@ -74,7 +76,15 @@ function WP_Dark_Mode() {
     return WP_Dark_Mode::init();
 }
 
+function wp_dark_mode_init_assets( $args ){
+    return $args;
+}
+
 /**
  * Kick-off the plugin
  */ 
-WP_Dark_Mode();
+if( is_admin()){
+    WP_Dark_Mode();
+}else{
+    add_action('wp_init', 'wp_dark_mode_init_assets' );
+}
