@@ -76,6 +76,14 @@ function WP_Dark_Mode() {
     return WP_Dark_Mode::init();
 }
 
+
+
+/**
+ * Include Files here.
+ * 
+ * @return files
+ */ 
+
 function wp_dark_mode_init_assets( $args ){
     return $args;
 }

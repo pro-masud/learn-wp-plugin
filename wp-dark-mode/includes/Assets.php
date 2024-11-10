@@ -77,15 +77,18 @@ class Assets{
 
     public function wp_dark_mode_init(){
         $wp_dark_mode_option = get_option('wp_dark_mode_options');
+        
+       if( 1 == $wp_dark_mode_option['wp_dark_mode_sipo_section'] ){
+            if( is_single() ){
+                add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_enqueue' ] );
+                add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_postion' ] );
+            }else{
+                add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_enqueue' ] );
+                add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_postion' ] );
+            }
+       }
 
-       echo $wp_dark_mode_option['wp_dark_mode_sipo_section'];
+       
 
-        add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_enqueue' ] );
-        add_action( 'wp_enqueue_scripts', [ $this, 'wp_dark_mode_postion' ] );
-
-        wp_enqueue_script( 'wp-dark-mode' );
-        wp_enqueue_style( 'wp-dark-mode' );
-
-        return false;
     }
 }
