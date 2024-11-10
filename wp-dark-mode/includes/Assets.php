@@ -7,7 +7,7 @@ class Assets{
         add_action( 'wp_enqueue_scripts', [ $this, 'dark_mode_enqueue_assets_file' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'dark_mode_enqueue_assets_file' ] ); 
         
-        // add_action( 'wp', [ $this, 'wp_dark_mode_init' ] );
+        add_action( 'wp', [ $this, 'wp_dark_mode_init' ] );
 
     }
 
@@ -35,13 +35,13 @@ class Assets{
         $style_files = $this->wp_dark_mode_style_assets_file();
         foreach( $style_files as $handle => $style){
             $deps = isset( $style['deps'] ) ? $style['deps'] : false;
-            wp_enqueue_style( $handle, $style['src'], $deps, $style['version'] ); // Enqueue instead of just register
+            wp_register_style( $handle, $style['src'], $deps, $style['version'] ); // Enqueue instead of just register
         }
     
         $script_files = $this->wp_dark_mode_js_assets_file();
         foreach( $script_files as $handle => $script){
             $deps = isset( $script['deps'] ) ? $script['deps'] : false;
-            wp_enqueue_script( $handle, $script['src'], $deps, $script['version'], true ); // Enqueue instead of just register
+            wp_register_script( $handle, $script['src'], $deps, $script['version'], true ); // Enqueue instead of just register
         }
     }
     
@@ -51,10 +51,10 @@ class Assets{
         $wp_dark_mode_option = get_option('wp_dark_mode_options');
         
         if( 1 == $wp_dark_mode_option['wp_dark_mode_sipo_section'] ){
-                if( is_single() ){
-                    wp_enqueue_script( 'wp-dark-mode-js' );
-                    wp_enqueue_style( 'wp-dark-mode-css' );
-                }
+            if( is_single() ){
+                wp_enqueue_script( 'wp-dark-mode-js' );
+                wp_enqueue_style( 'wp-dark-mode-css' );
+            }
         }else{
             wp_enqueue_script( 'wp-dark-mode-js' );
             wp_enqueue_style( 'wp-dark-mode-css' );
