@@ -78,5 +78,4 @@ function WP_Dark_Mode() {
 /**
  * Kick-off the plugin
  */ 
-    
- WP_Dark_Mode();
+    WP_Dark_Mode();

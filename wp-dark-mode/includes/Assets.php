@@ -8,7 +8,7 @@ class Assets{
         add_action( 'admin_enqueue_scripts', [ $this, 'dark_mode_enqueue_assets_file' ] ); 
         
         add_action( 'wp', [ $this, 'wp_dark_mode_init' ] );
-
+        add_action( 'wp', [ $this, 'wp_dark_mode_postion' ] );
     }
 
     public function wp_dark_mode_js_assets_file(){
@@ -45,7 +45,19 @@ class Assets{
         }
     }
     
+    public function wp_dark_mode_postion(){
+        $wp_dark_mode_option = get_option('wp_dark_mode_options');
 
+
+
+        $wp_dark_mode_wyotwb_section = $wp_dark_mode_option['wp_dark_mode_wyotwb_section'];
+
+        if(1 == $wp_dark_mode_wyotwb_section){
+            $wp_dark_mode_toggle = 'const darkmode = new Darkmode(options)';
+        }else{
+            $wp_dark_mode_toggle = 'const darkmode = new Darkmode(options).showWidget()';
+        }
+    }
 
     public function wp_dark_mode_init(){
         $wp_dark_mode_option = get_option('wp_dark_mode_options');
