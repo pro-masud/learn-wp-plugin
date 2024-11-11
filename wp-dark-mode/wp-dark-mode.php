@@ -1,6 +1,6 @@
 <?php 
 /**
- * Plugin Name: Wp Dark Mode
+ * Plugin Name: WP Dark Mode
  * Version: 1.0.0
  * Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, similique!
  * Author: Masud Rana
@@ -21,17 +21,17 @@ final class WP_Dark_Mode {
      * 
      * @var string
      */ 
-    const version = '1.0';
+    const VERSION = '1.0';
 
     /**
      * Class Construct Function Here
      */ 
-    function __construct() {
+    public function __construct() {
         $this->define_constants();
         
         add_action('plugins_loaded', [ $this, 'wp_dark_mode_init_plugin' ]);        
         
-        load_plugin_textdomain( 'wp-dark-mode', false, dirname( WP_DARK_MODE_FILE ) . '/language' );
+        load_plugin_textdomain( 'wp-dark-mode', false, dirname( plugin_basename( WP_DARK_MODE_FILE ) ) . '/language' );
     }
 
     public function wp_dark_mode_init_plugin(){
@@ -60,7 +60,7 @@ final class WP_Dark_Mode {
      * Defines constants used in the plugin
      */ 
     public function define_constants() {
-        define('WP_DARK_MODE_VERSION', self::version);
+        define('WP_DARK_MODE_VERSION', self::VERSION);
         define('WP_DARK_MODE_FILE', __FILE__);
         define('WP_DARK_MODE_PATH', __DIR__);
         define('WP_DARK_MODE_URL', plugins_url('', WP_DARK_MODE_FILE));
@@ -78,4 +78,4 @@ function WP_Dark_Mode() {
 /**
  * Kick-off the plugin
  */ 
-    WP_Dark_Mode();
+WP_Dark_Mode();
