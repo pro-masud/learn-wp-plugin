@@ -167,7 +167,7 @@ class Menus {
         );
 
         add_settings_field(
-            'wp_dark_mode_wtmosm_section',
+            'wp_dark_mode_match_os',
             __( 'Want to match the OS mode?', 'wp-dark-mode' ),
             [ $this, 'wp_dark_mode_wtmosm_settings_callback' ],
             'wp-dark-mode-admin-section-page',
@@ -281,7 +281,7 @@ class Menus {
 
     public function wp_dark_mode_button_light_setting_callback(){
         printf(
-            '<input type="color" id="wp_dark_mode_button_dark_settings" name="wp_dark_mode_options[wp_dark_mode_button_light_settings]" value="%s" />',
+            '<input type="color" id="wp_dark_mode_button_light_settings" name="wp_dark_mode_options[wp_dark_mode_button_light_settings]" value="%s" />',
             isset( $this->options[ 'wp_dark_mode_button_light_settings' ] ) ? esc_attr( $this->options[ 'wp_dark_mode_button_light_settings' ] ) : ''
         );
     }
