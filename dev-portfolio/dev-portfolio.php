@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Dev Portfolio
  * Plugin URI:        https://dev-masud-rana.netlify.app/
- * Description:       Dev-Portfolio is a powerful and easy-to-use WordPress plugin designed to showcase your professional portfolio. Perfect for developers, designers, and creatives, it provides customizable layouts and seamless integration, allowing you to highlight your projects with style and functionality
+ * Description:       Dev Portfolio is a powerful and easy-to-use WordPress plugin designed to showcase your professional portfolio. Perfect for developers, designers, and creatives, it provides customizable layouts and seamless integration, allowing you to highlight your projects with style and functionality
  * Version:           1.0.0
  * Author:            Masud Rana
  * Author URI:        https://dev-masud-rana.netlify.app//
