@@ -30,7 +30,6 @@ class Wp_Slider_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+		delete_option( 'wp_slider_options' );
 	}
-
 }

@@ -60,6 +60,8 @@ class Wp_Slider_Activator {
 			'use_javascript_animation'	=> '1',
 			'use_carousel_fade'		=> '0',
 		);
+
+		add_option('wp_slider_options', $defaults);
 	}
 
 }
