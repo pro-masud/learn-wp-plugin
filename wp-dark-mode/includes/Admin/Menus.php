@@ -35,6 +35,7 @@ class Menus {
     }
 
     public function wp_dark_mode_init_page() {
+        
         register_setting(
             'wp_dark_mode_main_options_group',
             'wp_dark_mode_options',
