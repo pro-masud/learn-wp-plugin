@@ -14,7 +14,6 @@ class Menu {
 
         add_action('admin_menu', [ $this, 'admin_menu' ] );
     }
-
     public function admin_menu(){
         $parent_slug = 'mr-9';
         $capability = 'manage_options';
