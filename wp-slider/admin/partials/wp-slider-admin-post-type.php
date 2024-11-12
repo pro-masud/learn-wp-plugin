@@ -10,7 +10,7 @@ function wp_slider_carousel_post_type() {
 		'archives'              => __( 'Slider Archives', 'wp-slider' ),
 		'attributes'            => __( 'Slider Attributes', 'wp-slider' ),
 		'parent_item_colon'     => __( 'Parent Item:', 'wp-slider' ),
-		'all_items'             => __( 'All Sliders', 'wp-slider' ),
+		'all_items'             => __( 'All Wp Sliders', 'wp-slider' ),
 		'add_new_item'          => __( 'Add New Slider', 'wp-slider' ),
 		'add_new'               => __( 'Add New Slider', 'wp-slider' ),
 		'new_item'              => __( 'New Slider', 'wp-slider' ),
