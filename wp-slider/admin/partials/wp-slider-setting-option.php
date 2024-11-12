@@ -17,15 +17,19 @@ class Wp_Slider_Option {
     }
 
     public function wp_slider_settings_option(){
+        $this->options = get_option( 'wp_slider_settings' );
+
         ?>
             <div class="wrap">
+                <?php echo $this->options; ?>
                 <h1 class="wp-heading-inline" >
                     <?php _e('Edit Address', 'mr-9') ?>
                 </h1>
                 <form action="options.php" method="post">
                     <?php 
-                        settings_fields( 'wp_slider_settings' );
-                        do_settings_sections( 'wp-slider-carousel' );
+                        settings_fields( 'wp_slider_main_options_group' ); // Ensure the group matches register_setting()
+                        do_settings_sections( 'wp-slider-carousel' ); // Ensure this matches add_settings_section() 'page'
+
                         submit_button();
                     ?>
                 </form>
@@ -35,8 +39,9 @@ class Wp_Slider_Option {
 
 
     public function wp_slider_page_init(){
+
         register_setting(
-        'wp_slider_settings',
+        'wp_slider_main_options_group',
         'wp_slider_settings',
         [ $this, 'wp_slider_sanitaize' ]
         );
@@ -46,6 +51,14 @@ class Wp_Slider_Option {
             __( 'Slider Carousel Behaviour', 'wp-slider' ), // Name
             array( $this, 'wp_slider_settings_behaviour_header' ),
             'wp-slider-carousel',
+        );
+
+        add_settings_field( 
+            'interval', // ID
+            __( 'Slider Interval (milliseconds)', 'wp-slider' ), // Name
+            array( $this, 'interval_callback' ),
+            'wp-slider-carousel',
+            'slider_settings_behaviour',
         );
 
         add_settings_section( 
@@ -61,11 +74,25 @@ class Wp_Slider_Option {
             array( $this, 'wp_slider_settings_link_buttons_header' ),
             'wp-slider-carousel',
         );
+
+        add_settings_section( 
+            'slider_settings_custom_markup', // ID
+            __( 'Custom Markup', 'wp-slider' ), // Name
+            array( $this, 'wp_slider_settings_custom_markup_header' ),
+            'wp-slider-carousel',
+        );
     }
 
-    public function wp_slider_sanitaize( $input ){
-
+    public function wp_slider_sanitaize( $input ) {
+        $sanitized_input = array();
+    
+        if ( isset( $input['interval'] ) ) {
+            $sanitized_input['interval'] = absint( $input['interval'] ); // Ensures the interval is an integer.
+        }
+    
+        return $sanitized_input;
     }
+    
 
     /**
      * WP Slider Behaviour Section 
@@ -73,6 +100,15 @@ class Wp_Slider_Option {
     public function wp_slider_settings_behaviour_header(){
         echo "<p>Slider Header Section</p>";
     }
+
+    public function interval_callback() {
+        printf(
+            '<input type="text" id="interval" name="wp_slider_settings[interval]" value="%s" size="15" />',
+            isset( $this->options['interval'] ) ? esc_attr( $this->options['interval'] ) : ''
+        );
+        echo '<p class="description">' . __( 'How long each image shows for before it slides. Set to 0 to disable animation.', 'wp-slider' ) . '</p>';
+    }
+    
 
     /**
      * WP Slider Setup Section 
@@ -82,9 +118,16 @@ class Wp_Slider_Option {
     }
 
     /**
-     * WP Slider Setup Section 
+     * WP Slider Setup Section  
      * */ 
     public function wp_slider_settings_link_buttons_header(){
+        echo "<p>Slider Header Section</p>";
+    }
+
+    /**
+     * WP Slider Setup Section  
+     * */ 
+    public function wp_slider_settings_custom_markup_header(){
         echo "<p>Slider Header Section</p>";
     }
 }
