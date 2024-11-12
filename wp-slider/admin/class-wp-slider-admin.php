@@ -105,6 +105,7 @@ class Wp_Slider_Admin {
 
 	public function wp_slider_admin_include_file(){
 		include WP_SLIDER_PATH . '/admin/partials/wp-slider-admin-post-type.php';
+		include WP_SLIDER_PATH . '/admin/partials/wp-slider-setting-option.php';
 	}
 
 }
