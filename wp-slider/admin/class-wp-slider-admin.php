@@ -52,6 +52,8 @@ class Wp_Slider_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		$this->wp_slider_admin_include_file();
+
 	}
 
 	/**
@@ -98,6 +100,11 @@ class Wp_Slider_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-slider-admin.js', array( 'jquery' ), $this->version, true );
 
+	}
+
+
+	public function wp_slider_admin_include_file(){
+		include WP_SLIDER_PATH . '/admin/partials/wp-slider-admin-post-type.php';
 	}
 
 }
