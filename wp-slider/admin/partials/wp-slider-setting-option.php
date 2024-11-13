@@ -333,21 +333,31 @@ class Wp_Slider_Option {
     }
     
     public function wp_slider_image_size_callback() {
-        $show_slide_catagory = isset($this->options['show_slide_catagory']) ? $this->options['show_slide_catagory'] : 'true';
-        $show_slide_catagory_t = $show_slide_catagory === 'true' ? 'selected=selected' : '';
-        $show_slide_catagory_f = $show_slide_catagory === 'false' ? 'selected=selected' : '';
+        $show_slide_image_size = isset($this->options['image_size']) ? $this->options['image_size'] : 'full';
+        $image_sizes = get_intermediate_image_sizes(); // Assuming you'll populate dropdown later.
+    
+        echo '<select id="image_size" name="wp_slider_settings[image_size]">';
         
-        printf(
-            '<select id="show_slide_order_by" name="wp_slider_settings[show_slide_order_by]">
-                <option value="true" %s>%s</option>
-                <option value="false" %s>%s</option>
-            </select>',
-            esc_attr(text: $show_slide_catagory_t),
-            esc_html__('All Category', 'wp-slider'),
-            esc_attr($show_slide_catagory_f),
-            esc_html__('Desending', 'wp-slider')
-        );
+            // Add "Full" option as default:
+            printf(
+                '<option value="full" %s>%s</option>',
+                selected($show_slide_image_size, 'full', false), // Use `selected` for comparison and selected logic.
+                'Full (default)'
+            ); 
+        
+            // Loop through intermediate image sizes
+            foreach ($image_sizes as $size) {
+                printf(
+                    '<option value="%s" %s>%s</option>',
+                    esc_attr($size),
+                    selected($show_slide_image_size, $size, false),
+                    ucfirst(esc_html($size))
+                );
+            }
+    
+        echo '</select>';
     }
+    
     
 
     /**
