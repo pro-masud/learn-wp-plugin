@@ -139,6 +139,14 @@ class Wp_Slider_Option {
             'slider_settings_setup'
         );
 
+        add_settings_field( 
+            'slider_image', 
+            __( 'Slider Image', 'wp-slider' ), 
+            array( $this, 'wp_slider_image_upload_callback' ), 
+            'wp-slider-carousel', 
+            'slider_settings_setup'
+        );
+
         add_settings_section( 
             'slider_settings_button_link', // ID
             __( 'Button Link', 'wp-slider' ), // Name
@@ -356,7 +364,28 @@ class Wp_Slider_Option {
             }
     
         echo '</select>';
+        echo '';
     }
+
+    public function wp_slider_image_upload_callback() {
+        $image_url = isset($this->options['slider_image']) ? $this->options['slider_image'] : '';
+        
+        printf(
+            '<div>
+                <img id="slider-image-preview" src="%s" style="max-width: 300px; max-height: 150px; display: %s;" />
+                <input type="hidden" id="slider-image" name="wp_slider_settings[slider_image]" value="%s" />
+                <button type="button" class="button" id="upload-slider-image">%s</button>
+                <button type="button" class="button" id="remove-slider-image" style="display: %s;">%s</button>
+            </div>',
+            esc_url($image_url),
+            $image_url ? 'block' : 'none',
+            esc_attr($image_url),
+            esc_html__('Upload Image', 'wp-slider'),
+            $image_url ? 'inline-block' : 'none',
+            esc_html__('Remove Image', 'wp-slider')
+        );
+    }
+    
     
     
 
