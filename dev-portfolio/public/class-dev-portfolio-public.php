@@ -52,6 +52,8 @@ class Dev_Portfolio_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		add_shortcode( 'dev-portfolio', [ $this, 'dev_portfolio_front_end' ] );
+
 	}
 
 	/**
@@ -100,8 +102,10 @@ class Dev_Portfolio_Public {
 
 	}
 
-	public function wp_slider_admin_include_file(){
-		include DEV_PORTFOLIO_PATH . '/admin/partials/wp-slider-admin-post-type.php';
+	public function dev_portfolio_front_end(){
+		if( function_exists('dev_portfolio_front_end')){
+			
+		}
 	}
 
 }
