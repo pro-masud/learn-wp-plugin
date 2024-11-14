@@ -75,6 +75,8 @@ class Dev_Portfolio_Public {
 		 * class.
 		 */
 
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/all.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dev-portfolio-public.css', array(), $this->version, 'all' );
 
 	}
@@ -98,13 +100,15 @@ class Dev_Portfolio_Public {
 		 * class.
 		 */
 
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/main.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dev-portfolio-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 
 	public function dev_portfolio_front_end(){
 		if( function_exists('dev_portfolio_front_end')){
-			
+			include DEV_PORTFOLIO_PATH . '/public/view/dev-portfolio-front-end-view.php';
 		}
 	}
 
