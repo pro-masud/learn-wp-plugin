@@ -100,4 +100,8 @@ class Dev_Portfolio_Public {
 
 	}
 
+	public function wp_slider_admin_include_file(){
+		include DEV_PORTFOLIO_PATH . '/admin/partials/wp-slider-admin-post-type.php';
+	}
+
 }

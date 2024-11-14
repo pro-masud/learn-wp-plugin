@@ -36,6 +36,10 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'DEV_PORTFOLIO_VERSION', '1.0.0' );
+define('DEV_PORTFOLIO_FILE', __FILE__);
+define('DEV_PORTFOLIO_PATH', __DIR__);
+define('DEV_PORTFOLIO_URL', plugins_url('', DEV_PORTFOLIO_FILE));
+define('DEV_PORTFOLIO_ASSETS', DEV_PORTFOLIO_URL . '/assets');
 
 /**
  * The code that runs during plugin activation.
