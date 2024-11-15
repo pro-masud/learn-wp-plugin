@@ -52,6 +52,24 @@ class Woo_Quik_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		add_action('admin_menu', [ $this, 'woo_quik_view_admin_bar' ] );
+
+	}
+
+	public function woo_quik_view_admin_bar(){
+		add_menu_page(
+            __( 'Woo Quik View', 'woo-quik' ),
+            __( 'Woo Quik View', 'woo-quik' ),
+            'manage_options',
+            'woo-quik-view',
+            [ $this, 'woo_quik_view_admin_callback_view' ],
+            'dashicons-tagcloud',
+            100
+        );
+	}
+
+	public function woo_quik_view_admin_callback_view(){
+		echo "hello word";
 	}
 
 	/**
