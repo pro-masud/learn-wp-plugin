@@ -19,7 +19,7 @@ class Menus {
         );
     }
 
-    public function wp_dark_mode_admin_front_end() {
+    public function wp_dark_mode_admin_front_end(): void {
         $this->options = get_option('wp_dark_mode_options');
         ?> 
         <div class="wrap">
