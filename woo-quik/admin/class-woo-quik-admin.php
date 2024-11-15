@@ -75,10 +75,10 @@ class Woo_Quik_Admin {
      * Render the admin page content.
      */
     public function woo_quik_view_admin_callback_frontend_view() {
-        $this->options = get_option( 'woo_quik_view_option' );
+        $this->options = get_option( 'woo_quik_view_option', [] );
+
         ?>
         <div class="wrap">
-            <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
             <form action="options.php" method="post">
                 <?php 
                     settings_fields( 'woo_quik_view_group' );
@@ -97,24 +97,33 @@ class Woo_Quik_Admin {
         register_setting(
             'woo_quik_view_group',
             'woo_quik_view_option',
-            [ 'sanitize_callback' => [ $this, 'sanitize_options' ] ]
+			[ $this, 'sanitize_options' ]
         );
 
         add_settings_section(
             'woo_quik_view_admin_page_section',
-            __( 'Woo Quik View Settings', 'woo-quik' ),
+            __( 'Woo Quik View', 'woo-quik' ),
             [ $this, 'woo_quik_view_section_page' ],
             'woo-quik-view'
         );
 
         add_settings_field(
-            'woo_quik_view_bottom',
-            __( 'Bottom Position', 'woo-quik' ),
-            [ $this, 'woo_quik_view_bottom_callback' ],
+            'woo_quik_disable_enable_view',
+            __( 'Quik View Disable/Enable', 'woo-quik' ),
+            [ $this, 'woo_quik_view_disable_enable_view' ],
             'woo-quik-view',
             'woo_quik_view_admin_page_section'
         );
     }
+
+	public function woo_quik_view_disable_enable_view() {
+		$checked = isset( $this->options['woo_quik_disable_enable_view'] ) && $this->options['woo_quik_disable_enable_view'] === 'yes';
+		printf(
+			'<input type="checkbox" id="woo_quik_disable_enable_view" name="woo_quik_view_option[woo_quik_disable_enable_view]" value="yes" %s />',
+			checked( $checked, true, false )
+		);
+	}
+	
 
     /**
      * Section description callback.
@@ -124,27 +133,33 @@ class Woo_Quik_Admin {
     }
 
     /**
-     * Field callback for 'Bottom Position'.
-     */
-    public function woo_quik_view_bottom_callback() {
-        $options = get_option( 'woo_quik_view_option' );
-        $value = isset( $options['bottom_position'] ) ? esc_attr( $options['bottom_position'] ) : '';
-        echo '<input type="text" id="bottom_position" name="woo_quik_view_option[bottom_position]" value="' . $value . '" />';
-    }
-
-    /**
      * Sanitize options callback.
      *
      * @param array $input The input values.
      * @return array The sanitized values.
      */
-    public function sanitize_options( $input ) {
-        $sanitized = [];
-        if ( isset( $input['bottom_position'] ) ) {
-            $sanitized['bottom_position'] = sanitize_text_field( $input['bottom_position'] );
-        }
-        return $sanitized;
-    }
+	public function sanitize_options( $input ) {
+		if ( ! is_array( $input ) ) {
+			return [];
+		}
+	
+		$checkbox_keys = [
+			'woo_quik_disable_enable_view', // Add more checkbox keys here if needed.
+		];
+	
+		$sanitized = [];
+	
+		foreach ( $input as $key => $value ) {
+			if ( in_array( $key, $checkbox_keys, true ) ) {
+				$sanitized[ $key ] = $value === 'yes' ? 'yes' : 'no';
+			} else {
+				$sanitized[ $key ] = sanitize_text_field( $value );
+			}
+		}
+	
+		return $sanitized;
+	}
+	
 
     /**
      * Register the stylesheets for the admin area.
