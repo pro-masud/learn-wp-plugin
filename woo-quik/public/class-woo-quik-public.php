@@ -52,7 +52,13 @@ class Woo_Quik_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		add_action( 'woocommerce_after_shop_loop_item', [ $this, 'woo_quik_view_shop_page_btn' ] );
+
 	}
+
+	public function woo_quik_view_shop_page_btn(){
+        echo '<a href="#" class="woo-quick-view-btn">' . __("Quick View", "woo-quik") . '</a>';
+    }
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.

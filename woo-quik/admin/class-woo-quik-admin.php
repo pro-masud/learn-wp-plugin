@@ -54,11 +54,6 @@ class Woo_Quik_Admin {
 
         add_action( 'admin_menu', [ $this, 'woo_quik_view_admin_bar' ] );
         add_action( 'admin_init', [ $this, 'woo_quik_view_admin_callback_view' ] );
-        add_action( 'woocommerce_after_shop_loop_item', [ $this, 'woo_quik_view_shop_page_btn' ] );
-    }
-
-    public function woo_quik_view_shop_page_btn(){
-        echo '<a href="#" class="woo-quick-view-btn">' . __("Quick View", "woo-quik") . '</a>';
     }
 
     /**
