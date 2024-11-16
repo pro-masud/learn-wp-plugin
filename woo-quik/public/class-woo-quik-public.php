@@ -53,6 +53,7 @@ class Woo_Quik_Public {
 		$this->version = $version;
 
 		add_action( 'woocommerce_after_shop_loop_item', [ $this, 'woo_quik_view_shop_page_btn' ] );
+		add_action( 'wp_footer', [ $this, 'woo_quik_view_show_model' ]);
 
 	}
 
@@ -61,7 +62,19 @@ class Woo_Quik_Public {
 		$cat_id = $product->get_id();
 		echo '<a href="#" data-id="' . $cat_id . '" class="button product_type_simple add_to_cart_button ajax_add_to_cart mr-3 woo-quick-view-btn">' . __("Quick View", "woo-quik") . '</a>';
 	}
-	
+
+	public function woo_quik_view_show_model(){
+
+		?>
+			<div class="woo-quik-view-model animate lightSpeedIn">
+				<a href="#" id="woo-modal-close">X</a>
+				
+				<div class="woo-modal-content">
+
+				</div>
+			</div>
+		<?php
+	}
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
