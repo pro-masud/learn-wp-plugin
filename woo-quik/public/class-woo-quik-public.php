@@ -79,6 +79,8 @@ class Woo_Quik_Public {
 		 * class.
 		 */
 
+		wp_enqueue_style( $this->plugin_name . '-normalize', plugin_dir_url( __FILE__ ) . 'css/normalize.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . '-animate', plugin_dir_url( __FILE__ ) . 'css/animate.min.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/woo-quik-public.css', array(), $this->version, 'all' );
 
 	}
@@ -102,7 +104,15 @@ class Woo_Quik_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/woo-quik-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'woo-quik-public', plugin_dir_url( __FILE__ ) . 'js/woo-quik-public.js', array( 'jquery' ), $this->version, true );
+
+		wp_localize_script( 
+			'woo-quik-public',
+			'woo-quik-view',
+			[
+				'ajax'	=> admin_url( 'admin-ajax.php' )
+			]
+		);
 
 	}
 
