@@ -12,7 +12,8 @@
    top: 20%;
    left: 20%;
    right: 20%;
-   bottom: 20%;
+   bottom: 30%;
+   display: none;
    position: fixed;
    background-color: #fff;
    z-index: 999;

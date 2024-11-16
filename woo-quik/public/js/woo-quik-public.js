@@ -29,4 +29,9 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	$('.woo-quick-view-btn').on( 'click', function(e){
+		e.preventDefault();
+		console.log('hello world');
+	});
+
 })( jQuery );
