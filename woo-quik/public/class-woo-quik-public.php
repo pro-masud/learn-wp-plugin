@@ -41,7 +41,7 @@ class Woo_Quik_Public {
 	private $version;
 
 	/**
-	 * Initialize the class and set its properties.
+	 * Initialize the class and set its properties.	1Q
 	 *
 	 * @since    1.0.0
 	 * @param      string    $plugin_name       The name of the plugin.
@@ -57,8 +57,11 @@ class Woo_Quik_Public {
 	}
 
 	public function woo_quik_view_shop_page_btn(){
-        echo '<a href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart mr-3 woo-quick-view-btn">' . __("Quick View", "woo-quik") . '</a>';
-    }
+		global $product;
+		$cat_id = $product->get_id();
+		echo '<a href="#" data-id="' . $cat_id . '" class="button product_type_simple add_to_cart_button ajax_add_to_cart mr-3 woo-quick-view-btn">' . __("Quick View", "woo-quik") . '</a>';
+	}
+	
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
