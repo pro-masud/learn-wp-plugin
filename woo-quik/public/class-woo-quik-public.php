@@ -57,7 +57,7 @@ class Woo_Quik_Public {
 	}
 
 	public function woo_quik_view_shop_page_btn(){
-        echo '<a href="#" class="woo-quick-view-btn">' . __("Quick View", "woo-quik") . '</a>';
+        echo '<a href="#" class="button product_type_simple add_to_cart_button ajax_add_to_cart mr-3 woo-quick-view-btn">' . __("Quick View", "woo-quik") . '</a>';
     }
 
 	/**
