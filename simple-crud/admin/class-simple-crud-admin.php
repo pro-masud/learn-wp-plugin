@@ -58,7 +58,7 @@ class Simple_Crud_Admin {
 
 	public function simple_crud_admin_display_add() {
         $capabality = 'manage_options';
-        $slug       = 'simple-crud';
+        $slug       = 'simple-crud-list';
 
         // Add a Menu
         add_menu_page(
@@ -66,7 +66,7 @@ class Simple_Crud_Admin {
             __( 'Simple CRUD', 'simple-crud' ),     // Menu title
             $capabality,                            // Capability
             $slug,                                  // Menu slug
-            [$this, 'simple_crud_admin_page'],      // Callback function
+            [$this, 'simple_crud_admin_page_list'],      // Callback function
             'dashicons-admin-generic',              // Icon URL or Dashicons class
             100                                     // Position in the menu
         );
@@ -74,15 +74,15 @@ class Simple_Crud_Admin {
         // Add a submenu
         add_submenu_page(
             $slug,                                  // Parent slug
-            'Student List',                         // Page title
-            'Student List',                         // Menu title
+            __( 'Student List', 'simple-crud' ),    // Page title
+            __( 'Student List', 'simple-crud' ),    // Menu title
             $capabality,                            // Capability
             'simple-crud-add',                      // Submenu slug
             [$this, 'simple_crud_submenu_page_add'] // Callback function
         );
     }
 
-    public function simple_crud_admin_page() {
+    public function simple_crud_admin_page_list() {
         echo '<h1>Simple CRUD Admin Page</h1>';
         echo '<p>Welcome to the Simple CRUD plugin.</p>';
     }
@@ -90,6 +90,8 @@ class Simple_Crud_Admin {
     public function simple_crud_submenu_page_add() {
         echo '<h1>Simple CRUD Submenu Page</h1>';
         echo '<p>This is the submenu under the Simple CRUD plugin.</p>';
+
+		include_once SIMPLE_CRUD_PATH . '/admin/views/simple-crud-student-add.php';
     }
 
 	/**
