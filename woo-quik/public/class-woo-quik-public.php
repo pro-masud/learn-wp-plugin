@@ -57,11 +57,49 @@ class Woo_Quik_Public {
 
 		add_action( 'wp_ajax_woo_quik_view_callback', [ $this, 'woo_quik_view_callback' ]);
 		add_action( 'wp_ajax_nopriv_woo_quik_view_callback', [ $this, 'woo_quik_view_callback' ]);
-
 	}
 
 	public function woo_quik_view_callback(){
-		 
+		 if( isset( $_POST['wqv']));
+
+		 $wqvid = intval( $_POST['wqv'] );
+		 $args = array(
+			'post_type'	=> 'product',
+			'posts_per_page'	=> 1,
+			'post__in'	=> array( $wqvid )
+		);
+
+		$qvproduct = new WP_Query( $args );
+
+		if ($qvproduct->have_posts()) {
+            while ($qvproduct->have_posts()) {
+                $qvproduct->the_post();
+                global $product;
+                
+                echo '<div class="woo-qview-left">';
+                
+                // Display the product thumbnail
+                if (has_post_thumbnail()) {
+                    the_post_thumbnail('medium'); // Adjust the size as needed
+                }
+
+                // Get and display gallery images
+                $qvimgId = $product->get_gallery_image_ids();
+                
+                if (!empty($qvimgId)) {
+                    echo '<div class="qv-pgallery">';
+                    foreach ($qvimgId as $qvimg) {
+                        $qvimg_src = wp_get_attachment_image_src($qvimg, 'thumbnail');
+                        if ($qvimg_src) {
+                            echo '<img src="' . esc_url($qvimg_src[0]) . '" width="' . esc_attr($qvimg_src[1]) . '" height="' . esc_attr($qvimg_src[2]) . '" />';
+                        }
+                    }
+                    echo '</div>';
+                }
+
+                echo '</div>';
+            }
+        }
 	}
 
 	public function woo_quik_view_shop_page_btn(){
@@ -127,13 +165,13 @@ class Woo_Quik_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( 'woo-quik-public', plugin_dir_url( __FILE__ ) . 'js/woo-quik-public.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( 'woo-quik-public-script', plugin_dir_url( __FILE__ ) . 'js/woo-quik-public.js', array( 'jquery' ), $this->version, true );
 
 		wp_localize_script( 
-			'woo-quik-public',
-			'woo-quik-view',
+			'woo-quik-public-script',
+			'woo_quik_view',
 			[
-				'ajax'	=> admin_url( 'admin-ajax.php' )
+				'ajaxurl' => admin_url('admin-ajax.php'),
 			]
 		);
 

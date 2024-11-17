@@ -33,8 +33,7 @@
 		e.preventDefault();
 
 		$('.woo-quik-view-model').show();
-		let wqv = $(this).data('id');
-		alert( wqv );
+		let wqv = $(this).data('id');;
 
 		$.ajax({
 			url:woo_quik_view.ajaxurl,
@@ -42,7 +41,7 @@
 			dataType:"html",
 			data: {
 				action: "woo_quik_view_callback",
-				'qpid':wqv,
+				'wqv':wqv,
 			},
 			success:function(res){
 				$('.woo-modal-content').html(res);
