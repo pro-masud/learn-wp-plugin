@@ -2,6 +2,13 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ .woo-modal-content{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+ }
+
  .mr-3.woo-quick-view-btn{
     margin-right: 10px !important;
  }

@@ -78,29 +78,27 @@ class Woo_Quik_Public {
                 
                 echo '<div class="woo-qview-left">';
                 
-                // Display the product thumbnail
-                if (has_post_thumbnail()) {
-                    the_post_thumbnail('medium'); // Adjust the size as needed
-                }
+					// Display the product thumbnail
+					if (has_post_thumbnail()) {
+						the_post_thumbnail('medium'); // Adjust the size as needed
+					}
 
-                // Get and display gallery images
-                $qvimgId = $product->get_gallery_image_ids();
-                
-                if (!empty($qvimgId)) {
-                    echo '<div class="qv-pgallery">';
-                    foreach ($qvimgId as $qvimg) {
-                        $qvimg_src = wp_get_attachment_image_src($qvimg, 'thumbnail');
-                        if ($qvimg_src) {
-                            echo '<img src="' . esc_url($qvimg_src[0]) . '" width="' . esc_attr($qvimg_src[1]) . '" height="' . esc_attr($qvimg_src[2]) . '" />';
-                        }
-                    }
-                    echo '</div>';
-                }
-
-                echo '</div>';
-
-				echo '<div class="woo-qview-right">';
-					do_action('woo_quik_product_details');
+					// Get and display gallery images
+					$qvimgId = $product->get_gallery_image_ids();
+					
+					if (!empty($qvimgId)) {
+						echo '<div class="qv-pgallery">';
+							foreach ($qvimgId as $qvimg) {
+								$qvimg_src = wp_get_attachment_image_src($qvimg, 'thumbnail');
+								if ($qvimg_src) {
+									echo '<img src="' . esc_url($qvimg_src[0]) . '" width="' . esc_attr($qvimg_src[1]) . '" height="' . esc_attr($qvimg_src[2]) . '" />';
+								}
+							}
+						echo '</div>';
+					}
+					echo '</div>';
+						echo '<div class="woo-qview-right">';
+						do_action('woo_quik_product_details');
 				echo '</div>';
             }
 

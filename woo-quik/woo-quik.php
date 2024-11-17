@@ -73,6 +73,15 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-woo-quik.php';
  *
  * @since    1.0.0
  */
+
+ add_action( 'woo_quik_product_details', 'woocommerce_template_single_title', 5 );
+ add_action( 'woo_quik_product_details', 'woocommerce_template_single_rating', 10 );
+ add_action( 'woo_quik_product_details', 'woocommerce_template_single_price', 10 );
+ add_action( 'woo_quik_product_details', 'woocommerce_template_single_excerpt', 20 );
+ add_action( 'woo_quik_product_details', 'woocommerce_template_single_add_to_cart', 30 );
+ add_action( 'woo_quik_product_details', 'woocommerce_template_single_meta', 40 );
+ add_action( 'woo_quik_product_details', 'woocommerce_template_single_sharing', 50 );
+ 
 function run_woo_quik() {
 
 	$plugin = new Woo_Quik();
