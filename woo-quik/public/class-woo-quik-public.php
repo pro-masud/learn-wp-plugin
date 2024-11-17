@@ -55,6 +55,13 @@ class Woo_Quik_Public {
 		add_action( 'woocommerce_after_shop_loop_item', [ $this, 'woo_quik_view_shop_page_btn' ] );
 		add_action( 'wp_footer', [ $this, 'woo_quik_view_show_model' ]);
 
+		add_action( 'wp_ajax_woo_quik_view_callback', [ $this, 'woo_quik_view_callback' ]);
+		add_action( 'wp_ajax_nopriv_woo_quik_view_callback', [ $this, 'woo_quik_view_callback' ]);
+
+	}
+
+	public function woo_quik_view_callback(){
+		 
 	}
 
 	public function woo_quik_view_shop_page_btn(){

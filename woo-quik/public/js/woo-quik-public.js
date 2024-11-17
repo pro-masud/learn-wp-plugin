@@ -35,6 +35,19 @@
 		$('.woo-quik-view-model').show();
 		let wqv = $(this).data('id');
 		alert( wqv );
+
+		$.ajax({
+			url:woo_quik_view.ajaxurl,
+			method:"POST",
+			dataType:"html",
+			data: {
+				action: "woo_quik_view_callback",
+				'qpid':wqv,
+			},
+			success:function(res){
+				$('.woo-modal-content').html(res);
+			}
+		});
 	});
 
 	$('#woo-modal-close').on( 'click', function(e){
