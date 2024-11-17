@@ -33,6 +33,8 @@
 		e.preventDefault();
 
 		$('.woo-quik-view-model').show();
+		let wqv = $(this).data('id');
+		alert( wqv );
 	});
 
 	$('#woo-modal-close').on( 'click', function(e){
