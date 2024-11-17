@@ -52,6 +52,8 @@ class Simple_Crud_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		$this->simple_crud_admin_files();
+
 	}
 
 	/**
@@ -100,4 +102,7 @@ class Simple_Crud_Admin {
 
 	}
 
+	public function simple_crud_admin_files(){
+		include SIMPLE_CRUD_PATH . '/admin/partials/simple-crud-admin-display.php';
+	}
 }

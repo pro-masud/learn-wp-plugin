@@ -36,6 +36,10 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'SIMPLE_CRUD_VERSION', '1.0.0' );
+define('SIMPLE_CRUD_FILE', __FILE__);
+define('SIMPLE_CRUD_PATH', __DIR__);
+define('SIMPLE_CRUD_URL', plugins_url('', SIMPLE_CRUD_FILE));
+define('SIMPLE_CRUD_ASSETS', SIMPLE_CRUD_URL . '/assets');
 
 /**
  * The code that runs during plugin activation.
