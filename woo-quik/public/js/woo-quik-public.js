@@ -45,7 +45,10 @@
 			},
 			success:function(res){
 				$('.woo-modal-content').html(res);
-			}
+			},
+			error: function(error) {
+                console.log(error);
+            }
 		});
 	});
 

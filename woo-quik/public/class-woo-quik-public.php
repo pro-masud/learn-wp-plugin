@@ -98,7 +98,14 @@ class Woo_Quik_Public {
                 }
 
                 echo '</div>';
+
+				echo '<div class="woo-qview-right">';
+					do_action('woo_quik_product_details');
+				echo '</div>';
             }
+
+			wp_reset_postdata();
+			wp_die();
         }
 	}
 
