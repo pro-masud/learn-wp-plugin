@@ -66,7 +66,7 @@ class Woo_Quik_Public {
 	public function woo_quik_view_show_model(){
 
 		?>
-			<div class="woo-quik-view-model animate lightSpeedIn">
+			<div class="woo-quik-view-model animate__fadeIn lightSpeedIn">
 				<a href="#" id="woo-modal-close">X</a>
 				
 				<div class="woo-modal-content">

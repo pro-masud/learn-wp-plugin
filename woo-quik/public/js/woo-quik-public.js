@@ -31,7 +31,14 @@
 
 	$('.woo-quick-view-btn').on( 'click', function(e){
 		e.preventDefault();
-		console.log('hello world');
+
+		$('.woo-quik-view-model').show();
+	});
+
+	$('#woo-modal-close').on( 'click', function(e){
+		e.preventDefault();
+		
+		$('.woo-quik-view-model').hide();
 	});
 
 })( jQuery );
