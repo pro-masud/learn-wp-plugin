@@ -60,52 +60,49 @@ class Simple_Crud_Admin {
     public function simple_crud_data_insert() {
         global $wpdb;
 
-        $meg = "";
-        $id  = isset($_GET['id']) ? intval($_GET['id']) : '';
-
         if (isset($_POST['insert-student-btn'])) {
-            // Check nonce for security
-            if (!isset($_POST['simple_crud_nonce']) || !wp_verify_nonce($_POST['simple_crud_nonce'], 'simple_crud_action')) {
-                die('Security check failed.');
-            }
-
-            $student_name = sanitize_text_field($_POST['student_name']);
-            $student_id   = sanitize_text_field($_POST['student_id']);
+            // Sanitize inputs
+            $student_name  = sanitize_text_field($_POST['student_name']);
+            $student_id    = sanitize_text_field($_POST['student_id']);
             $student_email = sanitize_email($_POST['student_email']);
-            $student_msg  = sanitize_textarea_field($_POST['student_msg']);
+            $student_msg   = sanitize_textarea_field($_POST['student_msg']);
+
+            // Determine if this is an update or insert
+            $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+            $table_name = 'simple_crud'; // Adjust table name with prefix
 
             if ($id) {
                 // Update record
                 $updated = $wpdb->update(
-                    "simple_crud",
+                    $table_name,
                     [
                         'student_name'    => $student_name,
                         'student_id'      => $student_id,
                         'student_email'   => $student_email,
                         'student_message' => $student_msg,
                     ],
-                    ['id' => $id]
+                    ['id' => $id],
+                    ['%s', '%s', '%s', '%s'], // Value formats
+                    ['%d']                    // Where format
                 );
 
-                $meg = $updated ? "Data updated successfully." : "Failed to update data.";
+                echo $updated !== false ? '<p style="color:green;">Data updated successfully.</p>' : '<p style="color:red;">Failed to update data.</p>';
             } else {
                 // Insert new record
                 $inserted = $wpdb->insert(
-                    "simple_crud", 
+                    $table_name,
                     [
                         'student_name'    => $student_name,
                         'student_id'      => $student_id,
                         'student_email'   => $student_email,
                         'student_message' => $student_msg,
-                    ]
+                    ],
+                    ['%s', '%s', '%s', '%s']
                 );
 
-                $meg = $inserted ? "Data saved successfully." : "Failed to save data.";
+                echo $inserted ? '<p style="color:green;">Data saved successfully.</p>' : '<p style="color:red;">Failed to save data.</p>';
             }
-        }
-
-        if (!empty($meg)) {
-            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html($meg) . '</p></div>';
         }
     }
 

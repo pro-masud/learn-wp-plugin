@@ -21,28 +21,21 @@ $student_msg   = $simple_data['student_message'] ?? '';
 <div class="form">      
     <div class="tab-content">
         <div id="signup">   
-            <h1 class="simple-crud-title">Sign Up for Free</h1>
-            <form class="simple-crud-form" action="<?php echo esc_url( add_query_arg( [ 
-                'page' => 'simple-crud-add', 
-                'action' => $action, 
-                'id' => $id 
-            ], $_SERVER['PHP_SELF'] ) ); ?>" method="post">
-                <div class="top-row">
-                    <div class="field-wrap">
-                        <input type="text" name="student_name" placeholder="Student Name" value="<?php echo esc_attr($student_name); ?>" />
-                    </div>
-                
-                    <div class="field-wrap">
-                        <input type="text" name="student_id" placeholder="Student ID" value="<?php echo esc_attr($student_id); ?>" />
-                    </div>
+            <h1 class="simple-crud-title">Student Form</h1>
+            <form action="<?php echo esc_url(add_query_arg(['page' => 'simple-crud-add', 'action' => $action, 'id' => $id], admin_url('admin.php'))); ?>" method="post">
+                <div class="field-wrap">
+                    <input type="text" name="student_name" placeholder="Student Name" value="<?php echo esc_attr($student_name); ?>" required />
                 </div>
                 <div class="field-wrap">
-                    <input type="email" name="student_email" placeholder="Student Email" value="<?php echo esc_attr($student_email); ?>" />
+                    <input type="text" name="student_id" placeholder="Student ID" value="<?php echo esc_attr($student_id); ?>" required />
                 </div>
                 <div class="field-wrap">
-                    <textarea placeholder="Message" name="student_msg"><?php echo esc_textarea($student_msg); ?></textarea>
+                    <input type="email" name="student_email" placeholder="Student Email" value="<?php echo esc_attr($student_email); ?>" required />
                 </div>
-                <button type="submit" name="insert-student-btn" class="button button-block">Get Started</button>
+                <div class="field-wrap">
+                    <textarea name="student_msg" placeholder="Message"><?php echo esc_textarea($student_msg); ?></textarea>
+                </div>
+                <button type="submit" name="insert-student-btn" class="button button-block">Submit</button>
             </form>
         </div>
     </div><!-- tab-content -->
