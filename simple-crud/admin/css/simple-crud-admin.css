@@ -139,7 +139,7 @@ textarea {
 }
 
 .container{
-    margin: 20px 50px;
+   margin-right: 20px;
 }
 
 .input-container{
@@ -192,6 +192,9 @@ td{
     padding: 10px;
     border-right: 1px solid #333;
 }
+td{
+    border-bottom: 1px solid #333;
+}
 tbody{
     height: auto;
 }
@@ -208,12 +211,24 @@ tbody{
     padding-left: 10px;
     color: white;
 }
-
-
 .button {
     height: 40px;
     width: 400px;
     margin: 20px;
     margin-left: 0;
     margin-top: 30px;
+}
+table.student-list-view tbody tr td > a{
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 3px;
+}
+table.student-list-view tbody tr td > a:first-child{
+    color: green;
+}
+table.student-list-view tbody tr td > a:nth-child(2){
+    color: #333;
+}
+table.student-list-view tbody tr td > a:last-child{
+    color: red;
 }

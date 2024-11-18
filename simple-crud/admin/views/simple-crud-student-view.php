@@ -8,7 +8,7 @@
 ?>
 <div class="container">
     <h1>Student Management CRUD</h1>
-    <table class="table" id="table">
+    <table class="table student-list-view" id="table">
         <thead>
             <tr>
                 <th><?php echo esc_html( 'ID', 'simple-crud'); ?></th>
@@ -22,15 +22,15 @@
         <tbody id="tbody">
             <?php foreach($allData as $index => $single_data ){ ?>
                 <tr>
-                    <td>01</td>
-                    <td>Masud Rana</td>
-                    <td>42240101334</td>
-                    <td>promasudbd@gmail.com</td>
-                    <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero, architecto?</td>
+                    <td><?php echo esc_html( $single_data['id'], 'simple-crud' ); ?></td>
+                    <td><?php echo esc_html( $single_data['student_name'], 'simple-crud' ); ?></td>
+                    <td><?php echo esc_html( $single_data['student_id'], 'simple-crud' ); ?></td>
+                    <td><?php echo esc_html( $single_data['student_email'], 'simple-crud' ); ?></td>
+                    <td><?php echo esc_html( $single_data['student_message'], 'simple-crud' ); ?></td>
                     <td>
-                        <a href="">Edite</a>
-                        <a href="">view</a>
-                        <a href="">delete</a>
+                        <a href=""><span class="dashicons dashicons-list-view"></span></a>
+                        <a href=""><span class="dashicons dashicons-edit"></span></a>
+                        <a href=""><span class="dashicons dashicons-trash"></span></a>
                     </td>
                 </tr>
             <?php } ?>
