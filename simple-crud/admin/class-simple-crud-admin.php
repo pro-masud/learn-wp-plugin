@@ -122,6 +122,8 @@ class Simple_Crud_Admin {
 
 		include_once SIMPLE_CRUD_PATH . '/admin/views/simple-crud-student-add.php';
 
+
+		// simple data insert database
 		$this->simple_crud_data_insert();
     }
 
