@@ -158,48 +158,40 @@ textarea {
     gap: 10px;
 }
 
-.input-container input{
-    background-color: black;
-    border: 1px solid white;
-    height: 40px;
-    padding-left: 10px;
-    width: auto;
-    color: white;
-}
-
-.icons{
+.student-list-view .icons{
     margin-top: 10px;
     display: flex;
     justify-content: center;
     gap:10px
 }
-.table{
+table.student-list-view{
     border: 1px solid #333;
     width:100%;
     border-spacing: 0;
     overflow-x: auto;
 }
 
-th,td{
+.student-list-view th,
+.student-list-view td{
     text-align: center;
 }
-th{
+.student-list-view th{
     border-bottom: 1px solid #333;
     border-right: 1px solid #333;
     padding: 10px;
 }
-td{
+.student-list-view .td{
     padding: 10px;
     border-right: 1px solid #333;
 }
-td{
+.student-list-view td{
     border-bottom: 1px solid #333;
 }
-tbody{
+.student-list-view tbody{
     height: auto;
 }
 
-.search{
+.student-list-view .search{
     width:100%;
     background-color: black;
     border: 1px solid white;
@@ -211,7 +203,7 @@ tbody{
     padding-left: 10px;
     color: white;
 }
-.button {
+.student-list-view .button {
     height: 40px;
     width: 400px;
     margin: 20px;
@@ -231,4 +223,10 @@ table.student-list-view tbody tr td > a:nth-child(2){
 }
 table.student-list-view tbody tr td > a:last-child{
     color: red;
+}
+.student-list-view .button{
+    width: 100%;
+}
+.simple-crud-form textarea{
+    color: #333;
 }

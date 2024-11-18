@@ -18,16 +18,18 @@ $student_email = $simple_data['student_email'] ?? '';
 $student_msg   = $simple_data['student_message'] ?? '';
 
 ?>
-<div class="form">      
+<div class="form student-list-view simple-crud-form">      
     <div class="tab-content">
         <div id="signup">   
             <h1 class="simple-crud-title">Student Form</h1>
             <form action="<?php echo esc_url(add_query_arg(['page' => 'simple-crud-add', 'action' => $action, 'id' => $id], admin_url('admin.php'))); ?>" method="post">
-                <div class="field-wrap">
-                    <input type="text" name="student_name" placeholder="Student Name" value="<?php echo esc_attr($student_name); ?>" required />
-                </div>
-                <div class="field-wrap">
-                    <input type="text" name="student_id" placeholder="Student ID" value="<?php echo esc_attr($student_id); ?>" required />
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <input type="text" name="student_name" placeholder="Student Name" value="<?php echo esc_attr($student_name); ?>" required />
+                    </div>
+                    <div class="field-wrap">
+                        <input type="text" name="student_id" placeholder="Student ID" value="<?php echo esc_attr($student_id); ?>" required />
+                    </div>
                 </div>
                 <div class="field-wrap">
                     <input type="email" name="student_email" placeholder="Student Email" value="<?php echo esc_attr($student_email); ?>" required />

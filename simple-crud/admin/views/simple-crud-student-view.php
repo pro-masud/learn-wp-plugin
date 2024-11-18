@@ -7,7 +7,7 @@ $allData = $wpdb->get_results(
     ARRAY_A
 );
 ?>
-<div class="container">
+<div class="container student-info">
     <h1>Student Management CRUD</h1>
     <table class="table student-list-view" id="table">
         <thead>
