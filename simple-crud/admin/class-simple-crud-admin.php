@@ -125,6 +125,8 @@ class Simple_Crud_Admin {
     public function simple_crud_admin_page_list() {
         echo '<h1>Simple CRUD Admin Page</h1>';
         echo '<p>Welcome to the Simple CRUD plugin.</p>';
+
+		include_once SIMPLE_CRUD_PATH . '/admin/views/simple-crud-student-view.php';
     }
 
     public function simple_crud_submenu_page_add() {
