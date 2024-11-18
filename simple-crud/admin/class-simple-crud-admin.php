@@ -56,6 +56,35 @@ class Simple_Crud_Admin {
 
 	}
 
+	public function simple_crud_data_insert(){
+		global $wpdb;
+
+		$meg = "";
+
+		if (isset($_POST['insert-student-btn'])) {
+			$student_name = sanitize_text_field($_POST['student_name']);
+			$student_id = sanitize_text_field($_POST['student_id']);
+			$student_email = sanitize_email($_POST['student_email']);
+			$student_msg = sanitize_textarea_field($_POST['student_msg']);
+		
+			$inserted = $wpdb->insert(
+				"simple_crud", 
+				[
+					'student_name'    => $student_name,
+					'student_id'      => $student_id,
+					'student_email'   => $student_email,
+					'student_message' => $student_msg,
+				]
+			);
+		
+			if ($inserted) {
+				$meg = "Data saved successfully.";
+			} else {
+				$meg = "Failed to save data.";
+			}
+		}
+	}
+
 	public function simple_crud_admin_display_add() {
         $capabality = 'manage_options';
         $slug       = 'simple-crud-list';
@@ -92,6 +121,8 @@ class Simple_Crud_Admin {
         echo '<p>This is the submenu under the Simple CRUD plugin.</p>';
 
 		include_once SIMPLE_CRUD_PATH . '/admin/views/simple-crud-student-add.php';
+
+		$this->simple_crud_data_insert();
     }
 
 	/**
