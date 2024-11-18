@@ -1,0 +1,33 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+ .woo-modal-content{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+ }
+
+ .mr-3.woo-quick-view-btn{
+    margin-right: 10px !important;
+ }
+
+ .woo-quik-view-model{
+   width: 60%;
+   height: 560px;
+   top: 20%;
+   left: 20%;
+   right: 20%;
+   bottom: 30%;
+   display: none;
+   position: fixed;
+   background-color: #fff;
+   z-index: 999;
+   border: 5px solid #d3d3d3;
+   padding: 2%;
+ }
+ #woo-modal-close{
+   display: flex;
+   justify-content: end;
+ }
