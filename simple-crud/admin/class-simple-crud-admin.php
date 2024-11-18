@@ -82,6 +82,8 @@ class Simple_Crud_Admin {
 			} else {
 				$meg = "Failed to save data.";
 			}
+
+			echo $meg;
 		}
 	}
 
@@ -106,6 +108,15 @@ class Simple_Crud_Admin {
             __( 'Student List', 'simple-crud' ),    // Page title
             __( 'Student List', 'simple-crud' ),    // Menu title
             $capabality,                            // Capability
+			$slug,                      // Submenu slug
+            [$this, 'simple_crud_admin_page_list'] // Callback function
+        );
+        // Add a submenu
+        add_submenu_page(
+            $slug,                                  // Parent slug
+            __( 'Student Add', 'simple-crud' ),    // Page title
+            __( 'Student Add', 'simple-crud' ),    // Menu title
+            $capabality,                            // Capability
             'simple-crud-add',                      // Submenu slug
             [$this, 'simple_crud_submenu_page_add'] // Callback function
         );
@@ -121,7 +132,6 @@ class Simple_Crud_Admin {
         echo '<p>This is the submenu under the Simple CRUD plugin.</p>';
 
 		include_once SIMPLE_CRUD_PATH . '/admin/views/simple-crud-student-add.php';
-
 
 		// simple data insert database
 		$this->simple_crud_data_insert();
