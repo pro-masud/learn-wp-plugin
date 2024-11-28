@@ -1,0 +1,18 @@
+{
+    "name": "pc/boiler-plugin",
+    "description": "theme boilder plugin",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Pc\\BoilerPlugin\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pro-masud",
+            "email": "promasudbd@gmail.com"
+        }
+    ],
+    "require": {}
+}
